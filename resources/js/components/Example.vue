@@ -1,6 +1,6 @@
 <template>
     <div>
-        Test component vue 3
+
     </div>
 </template>
 

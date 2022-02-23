@@ -1,9 +1,9 @@
 require('./bootstrap');
 
-import { createApp } from "vue";
-import Example from './components/Example'
+import { createApp } from 'vue'
+import Example from "./components/Example"
 
+const app = createApp({})
 
-createApp({})
-    .component('example',require("./components/Example.vue").default)
-    .mount('#app')
+app.component('Example', Example)
+app.mount('#app')
