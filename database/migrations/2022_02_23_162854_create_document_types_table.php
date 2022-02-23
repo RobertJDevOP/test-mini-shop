@@ -1,25 +1,25 @@
 <?php
 
+use App\Constants\CustomerDocumentType;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('document_types', function (Blueprint $table) {
             $table->id();
-            $table->string('document_number',16);
-            $table->string('street',255);
-            $table->string('password');
-            $table->rememberToken();
             $table->timestamps();
+            $table->enum("type",  (new CustomerDocumentType())->toArray());
+            $table->string('description',60);
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('document_types');
     }
 };
