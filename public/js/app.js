@@ -72,6 +72,24 @@ __webpack_require__.r(__webpack_exports__);
     return {};
   },
   methods: {
+    setCustomerName: function setCustomerName(event) {
+      this.$store.commit('setCustomerName', event.target.value);
+    },
+    setCustomerEmail: function setCustomerEmail(event) {
+      this.$store.commit('setCustomerEmail', event.target.value);
+    },
+    setCustomerPhone: function setCustomerPhone(event) {
+      this.$store.commit('setCustomerPhone', event.target.value);
+    },
+    setCustomerStreet: function setCustomerStreet(event) {
+      this.$store.commit('setCustomerStreet', event.target.value);
+    },
+    setCustomerDocumentType: function setCustomerDocumentType(event) {
+      this.$store.commit('setCustomerDocumentType', event.target.value);
+    },
+    setCustomerDocumentNumber: function setCustomerDocumentNumber(event) {
+      this.$store.commit('setCustomerDocumentNumber', event.target.value);
+    },
     stepTreeBuy: function stepTreeBuy() {
       this.$store.dispatch('startStepThreeBuy', true);
       this.$store.dispatch('startStepTwoBuy', false);
@@ -84,6 +102,24 @@ __webpack_require__.r(__webpack_exports__);
   computed: {
     getStatusComponent: function getStatusComponent() {
       return this.$store.state.isShowingUserData;
+    },
+    getCustomerName: function getCustomerName() {
+      return this.$store.state.customerName;
+    },
+    getCustomerPhone: function getCustomerPhone() {
+      return this.$store.state.customerPhone;
+    },
+    getCustomerEmail: function getCustomerEmail() {
+      return this.$store.state.customerEmail;
+    },
+    getCustomerStreet: function getCustomerStreet() {
+      return this.$store.state.customerStreet;
+    },
+    getCustomerDocumentNumber: function getCustomerDocumentNumber() {
+      return this.$store.state.customerDocumentNumber;
+    },
+    getCustomerDocumentType: function getCustomerDocumentType() {
+      return this.$store.state.customerDocumentType;
     }
   }
 });
@@ -118,18 +154,35 @@ var _hoisted_3 = {
   "class": "container"
 };
 
-var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<br data-v-4b5b34f4><br data-v-4b5b34f4><h3 class=\"title is-4\" data-v-4b5b34f4>Resume de tu orden</h3><br data-v-4b5b34f4><div class=\"columns is-centered\" data-v-4b5b34f4><div class=\"column is-5\" data-v-4b5b34f4><div class=\"column\" data-v-4b5b34f4><div class=\"box\" data-v-4b5b34f4><div class=\"columns\" data-v-4b5b34f4><div class=\"column\" data-v-4b5b34f4><div class=\"card\" data-v-4b5b34f4><div class=\"card-image\" data-v-4b5b34f4><figure class=\"image is-4by3\" data-v-4b5b34f4><img src=\"http://localhost:8000/storage/pc.jpeg\" alt=\"Placeholder image\" data-v-4b5b34f4></figure></div><div class=\"card-content\" data-v-4b5b34f4><div class=\"media\" data-v-4b5b34f4><div class=\"media-left\" data-v-4b5b34f4><figure class=\"image is-48x48\" data-v-4b5b34f4><img src=\"http://localhost:8000/storage/pc.jpeg\" alt=\"Placeholder image\" data-v-4b5b34f4></figure></div><div class=\"media-content\" data-v-4b5b34f4><p class=\"title is-6\" data-v-4b5b34f4>Computador Convertible 2en1 Gaming ROG Flow X13 13.4&quot; Pulgadas GV301QE- AMD Ryzen 9- 16 GB RAM - Disco Estado Sólido 1TB- Negro + Obsequios</p><p class=\"subtitle is-6\" data-v-4b5b34f4>Número de producto: 4711081355274</p></div></div><div class=\"content\" data-v-4b5b34f4><div class=\"columns\" data-v-4b5b34f4><div class=\"column\" data-v-4b5b34f4><h3 class=\"title is-4\" data-v-4b5b34f4>Precio: $16.199.000 </h3></div><div class=\"column\" data-v-4b5b34f4><h3 class=\"title is-4\" data-v-4b5b34f4>Cantidad: 33 </h3></div></div></div></div></div></div></div></div></div></div><div class=\"column is-7\" data-v-4b5b34f4><h3 class=\"title is-4\" data-v-4b5b34f4>Información del cliente</h3><br data-v-4b5b34f4><br data-v-4b5b34f4><div class=\"field mb-5\" data-v-4b5b34f4><label class=\"label\" data-v-4b5b34f4>Nombres :</label></div><div class=\"field mb-5\" data-v-4b5b34f4><label class=\"label\" data-v-4b5b34f4>Telefono celular :</label></div><div class=\"field mb-5\" data-v-4b5b34f4><label class=\"label\" data-v-4b5b34f4>Tipo de documento :</label></div><div class=\"field mb-5\" data-v-4b5b34f4><label class=\"label\" data-v-4b5b34f4>Numero de documento :</label></div><div class=\"field mb-5\" data-v-4b5b34f4><label class=\"label\" data-v-4b5b34f4>Dirección de residencia :</label></div><div class=\"field mb-5\" data-v-4b5b34f4><label class=\"label\" data-v-4b5b34f4>Email :</label></div></div></div>", 5);
+var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<br data-v-4b5b34f4><br data-v-4b5b34f4><h3 class=\"title is-4\" data-v-4b5b34f4>Resumen de tu orden</h3><br data-v-4b5b34f4><div class=\"columns is-centered\" data-v-4b5b34f4><div class=\"column is-5\" data-v-4b5b34f4><div class=\"column\" data-v-4b5b34f4><div class=\"box\" data-v-4b5b34f4><div class=\"columns\" data-v-4b5b34f4><div class=\"column\" data-v-4b5b34f4><div class=\"card\" data-v-4b5b34f4><div class=\"card-image\" data-v-4b5b34f4><figure class=\"image is-4by3\" data-v-4b5b34f4><img src=\"http://localhost:8000/storage/pc.jpeg\" alt=\"Placeholder image\" data-v-4b5b34f4></figure></div><div class=\"card-content\" data-v-4b5b34f4><div class=\"media\" data-v-4b5b34f4><div class=\"media-left\" data-v-4b5b34f4><figure class=\"image is-48x48\" data-v-4b5b34f4><img src=\"http://localhost:8000/storage/pc.jpeg\" alt=\"Placeholder image\" data-v-4b5b34f4></figure></div><div class=\"media-content\" data-v-4b5b34f4><p class=\"title is-6\" data-v-4b5b34f4>Computador Convertible 2en1 Gaming ROG Flow X13 13.4&quot; Pulgadas GV301QE- AMD Ryzen 9- 16 GB RAM - Disco Estado Sólido 1TB- Negro + Obsequios</p><p class=\"subtitle is-6\" data-v-4b5b34f4>Número de producto: 4711081355274</p></div></div><div class=\"content\" data-v-4b5b34f4><div class=\"columns\" data-v-4b5b34f4><div class=\"column\" data-v-4b5b34f4><h3 class=\"title is-4\" data-v-4b5b34f4>Precio: $16.199.000 </h3></div><div class=\"column\" data-v-4b5b34f4><h3 class=\"title is-4\" data-v-4b5b34f4>Cantidad: 33 </h3></div></div></div></div></div></div></div></div></div></div><div class=\"column is-7\" data-v-4b5b34f4><h3 class=\"title is-4\" data-v-4b5b34f4>Información del cliente</h3><br data-v-4b5b34f4><br data-v-4b5b34f4><div class=\"field mb-5\" data-v-4b5b34f4><label class=\"label\" data-v-4b5b34f4>Nombres :</label></div><div class=\"field mb-5\" data-v-4b5b34f4><label class=\"label\" data-v-4b5b34f4>Telefono celular :</label></div><div class=\"field mb-5\" data-v-4b5b34f4><label class=\"label\" data-v-4b5b34f4>Tipo de documento :</label></div><div class=\"field mb-5\" data-v-4b5b34f4><label class=\"label\" data-v-4b5b34f4>Numero de documento :</label></div><div class=\"field mb-5\" data-v-4b5b34f4><label class=\"label\" data-v-4b5b34f4>Dirección de residencia :</label></div><div class=\"field mb-5\" data-v-4b5b34f4><label class=\"label\" data-v-4b5b34f4>Email :</label></div></div></div>", 5);
 
 var _hoisted_9 = {
+  "class": "columns"
+};
+var _hoisted_10 = {
+  "class": "column"
+};
+var _hoisted_11 = {
+  "class": "buttons has-addons is-left"
+};
+var _hoisted_12 = {
+  "class": "column"
+};
+var _hoisted_13 = {
   "class": "buttons has-addons is-right"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return $options.getStatusComponent ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [_hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  return $options.getStatusComponent ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [_hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     onClick: _cache[0] || (_cache[0] = function () {
+      return _ctx.stepTwoBuy && _ctx.stepTwoBuy.apply(_ctx, arguments);
+    }),
+    "class": "button is-warning is-fullwidth"
+  }, "Anterior")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    onClick: _cache[1] || (_cache[1] = function () {
       return _ctx.walletPayment && _ctx.walletPayment.apply(_ctx, arguments);
     }),
-    "class": "button is-primary is-medium is-left"
-  }, "Ir a pagar")])])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true);
+    "class": "button is-primary is-fullwidth"
+  }, "Ir a pagar")])])])])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true);
 }
 
 /***/ }),
@@ -271,29 +324,265 @@ var _hoisted_3 = {
   "class": "container"
 };
 
-var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<br><br><h3 class=\"title is-4\">Para continuar con tu compra es necesario completar los siguientes datos requeridos!</h3><br><div class=\"columns is-centered\"><div class=\"column is-4\"><div class=\"field\"><label class=\"label\">Nombres y apellidos</label><div class=\"control\"><input class=\"input\" type=\"text\"></div></div></div><div class=\"column is-4\"><div class=\"field\"><label class=\"label\">Celular</label><div class=\"control has-icons-left has-icons-right\"><input class=\"input\" type=\"text\"><span class=\"icon is-small is-left\"><i class=\"fas fa-user\"></i></span></div></div></div><div class=\"column is-4\"><div class=\"field\"><label class=\"label\">Email</label><div class=\"control has-icons-left has-icons-right\"><input class=\"input\" type=\"email\"><span class=\"icon is-small is-left\"><i class=\"fas fa-envelope\"></i></span><span class=\"icon is-small is-right\"><i class=\"fas fa-exclamation-triangle\"></i></span></div></div></div></div><div class=\"columns\"><div class=\"column is-6\"><div class=\"field\"><label class=\"label\">Dirección de residencia</label><div class=\"control\"><input class=\"input\" type=\"text\"></div></div></div><div class=\"column is-3\"><div class=\"field\"><label class=\"label\">Tipo de documento</label><div class=\"control has-icons-left has-icons-right\"><input class=\"input\" type=\"text\"><span class=\"icon is-small is-left\"><i class=\"fas fa-user\"></i></span></div></div></div><div class=\"column is-3\"><div class=\"field\"><label class=\"label\">Número de documento</label><div class=\"control has-icons-left has-icons-right\"><input class=\"input\" type=\"number\"><span class=\"icon is-small is-left\"><i class=\"fas fa-envelope\"></i></span><span class=\"icon is-small is-right\"><i class=\"fas fa-exclamation-triangle\"></i></span></div></div></div></div>", 6);
+var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br", null, null, -1
+/* HOISTED */
+);
 
+var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br", null, null, -1
+/* HOISTED */
+);
+
+var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", {
+  "class": "title is-4"
+}, "Para continuar con tu compra es necesario completar los siguientes datos requeridos!", -1
+/* HOISTED */
+);
+
+var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br", null, null, -1
+/* HOISTED */
+);
+
+var _hoisted_8 = {
+  "class": "columns is-centered"
+};
+var _hoisted_9 = {
+  "class": "column is-4"
+};
 var _hoisted_10 = {
+  "class": "field"
+};
+
+var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "label"
+}, "Nombres y apellidos", -1
+/* HOISTED */
+);
+
+var _hoisted_12 = {
+  "class": "control"
+};
+var _hoisted_13 = ["value"];
+var _hoisted_14 = {
+  "class": "column is-4"
+};
+var _hoisted_15 = {
+  "class": "field"
+};
+
+var _hoisted_16 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "label"
+}, "Celular", -1
+/* HOISTED */
+);
+
+var _hoisted_17 = {
+  "class": "control has-icons-left has-icons-right"
+};
+var _hoisted_18 = ["value"];
+
+var _hoisted_19 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "icon is-small is-left"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+  "class": "fas fa-user"
+})], -1
+/* HOISTED */
+);
+
+var _hoisted_20 = {
+  "class": "column is-4"
+};
+var _hoisted_21 = {
+  "class": "field"
+};
+
+var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "label"
+}, "Email", -1
+/* HOISTED */
+);
+
+var _hoisted_23 = {
+  "class": "control has-icons-left has-icons-right"
+};
+var _hoisted_24 = ["value"];
+
+var _hoisted_25 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "icon is-small is-left"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+  "class": "fas fa-envelope"
+})], -1
+/* HOISTED */
+);
+
+var _hoisted_26 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "icon is-small is-right"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+  "class": "fas fa-exclamation-triangle"
+})], -1
+/* HOISTED */
+);
+
+var _hoisted_27 = {
   "class": "columns"
 };
-var _hoisted_11 = {
+var _hoisted_28 = {
   "class": "column is-6"
 };
-var _hoisted_12 = {
+var _hoisted_29 = {
+  "class": "field"
+};
+
+var _hoisted_30 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "label"
+}, "Dirección de residencia", -1
+/* HOISTED */
+);
+
+var _hoisted_31 = {
+  "class": "control"
+};
+var _hoisted_32 = ["value"];
+var _hoisted_33 = {
+  "class": "column is-3"
+};
+var _hoisted_34 = {
+  "class": "field"
+};
+
+var _hoisted_35 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "label"
+}, "Tipo de documento", -1
+/* HOISTED */
+);
+
+var _hoisted_36 = {
+  "class": "control has-icons-left has-icons-right"
+};
+var _hoisted_37 = ["value"];
+
+var _hoisted_38 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "icon is-small is-left"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+  "class": "fas fa-user"
+})], -1
+/* HOISTED */
+);
+
+var _hoisted_39 = {
+  "class": "column is-3"
+};
+var _hoisted_40 = {
+  "class": "field"
+};
+
+var _hoisted_41 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "label"
+}, "Número de documento", -1
+/* HOISTED */
+);
+
+var _hoisted_42 = {
+  "class": "control has-icons-left has-icons-right"
+};
+var _hoisted_43 = ["value"];
+
+var _hoisted_44 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "icon is-small is-left"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+  "class": "fas fa-envelope"
+})], -1
+/* HOISTED */
+);
+
+var _hoisted_45 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  "class": "icon is-small is-right"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("i", {
+  "class": "fas fa-exclamation-triangle"
+})], -1
+/* HOISTED */
+);
+
+var _hoisted_46 = {
+  "class": "columns"
+};
+var _hoisted_47 = {
   "class": "column is-6"
+};
+var _hoisted_48 = {
+  "class": "buttons has-addons is-left"
+};
+var _hoisted_49 = {
+  "class": "column is-6"
+};
+var _hoisted_50 = {
+  "class": "buttons has-addons is-right"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return $options.getStatusComponent ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [_hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-    onClick: _cache[0] || (_cache[0] = function () {
+  return $options.getStatusComponent ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [_hoisted_4, _hoisted_5, _hoisted_6, _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [_hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    "class": "input",
+    value: $options.getCustomerName,
+    onChange: _cache[0] || (_cache[0] = function () {
+      return $options.setCustomerName && $options.setCustomerName.apply($options, arguments);
+    }),
+    type: "text"
+  }, null, 40
+  /* PROPS, HYDRATE_EVENTS */
+  , _hoisted_13)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [_hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    "class": "input",
+    value: $options.getCustomerPhone,
+    onChange: _cache[1] || (_cache[1] = function () {
+      return $options.setCustomerPhone && $options.setCustomerPhone.apply($options, arguments);
+    }),
+    type: "number"
+  }, null, 40
+  /* PROPS, HYDRATE_EVENTS */
+  , _hoisted_18), _hoisted_19])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [_hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    "class": "input",
+    type: "email",
+    value: $options.getCustomerEmail,
+    onChange: _cache[2] || (_cache[2] = function () {
+      return $options.setCustomerEmail && $options.setCustomerEmail.apply($options, arguments);
+    })
+  }, null, 40
+  /* PROPS, HYDRATE_EVENTS */
+  , _hoisted_24), _hoisted_25, _hoisted_26])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_27, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_28, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_29, [_hoisted_30, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_31, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    "class": "input",
+    value: $options.getCustomerStreet,
+    onChange: _cache[3] || (_cache[3] = function () {
+      return $options.setCustomerStreet && $options.setCustomerStreet.apply($options, arguments);
+    }),
+    type: "text"
+  }, null, 40
+  /* PROPS, HYDRATE_EVENTS */
+  , _hoisted_32)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_33, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_34, [_hoisted_35, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_36, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    "class": "input",
+    value: $options.getCustomerDocumentType,
+    onChange: _cache[4] || (_cache[4] = function () {
+      return $options.setCustomerDocumentType && $options.setCustomerDocumentType.apply($options, arguments);
+    }),
+    type: "text"
+  }, null, 40
+  /* PROPS, HYDRATE_EVENTS */
+  , _hoisted_37), _hoisted_38])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_39, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_40, [_hoisted_41, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_42, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    "class": "input",
+    type: "number",
+    value: $options.getCustomerDocumentNumber,
+    onChange: _cache[5] || (_cache[5] = function () {
+      return $options.setCustomerDocumentNumber && $options.setCustomerDocumentNumber.apply($options, arguments);
+    })
+  }, null, 40
+  /* PROPS, HYDRATE_EVENTS */
+  , _hoisted_43), _hoisted_44, _hoisted_45])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_46, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_47, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_48, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    onClick: _cache[6] || (_cache[6] = function () {
       return $options.stepTwoBuy && $options.stepTwoBuy.apply($options, arguments);
     }),
-    "class": "button is-warning is-medium is-fullwidth"
-  }, "Anterior")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-    onClick: _cache[1] || (_cache[1] = function () {
+    "class": "button is-warning is-fullwidth"
+  }, "Anterior")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_49, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_50, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    onClick: _cache[7] || (_cache[7] = function () {
       return $options.stepTreeBuy && $options.stepTreeBuy.apply($options, arguments);
     }),
-    "class": "button is-primary is-medium is-fullwidth"
-  }, "Continuar")])])])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true);
+    "class": "button is-primary is-fullwidth"
+  }, "Continuar")])])])])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true);
 }
 
 /***/ }),
@@ -323,10 +612,35 @@ var store = (0,vuex__WEBPACK_IMPORTED_MODULE_4__.createStore)({
     return {
       isShowingUserData: false,
       isShowingShop: true,
-      isShowingResumeOrder: false
+      isShowingResumeOrder: false,
+      customerName: '',
+      customerEmail: '',
+      customerPhone: '',
+      customerDocumentType: '',
+      customerDocumentNumber: '',
+      customerStreet: ''
     };
   },
-  mutations: {},
+  mutations: {
+    setCustomerEmail: function setCustomerEmail(state, value) {
+      state.customerEmail = value;
+    },
+    setCustomerName: function setCustomerName(state, value) {
+      state.customerName = value;
+    },
+    setCustomerPhone: function setCustomerPhone(state, value) {
+      state.customerPhone = value;
+    },
+    setCustomerStreet: function setCustomerStreet(state, value) {
+      state.customerStreet = value;
+    },
+    setCustomerDocumentType: function setCustomerDocumentType(state, value) {
+      state.customerDocumentType = value;
+    },
+    setCustomerDocumentNumber: function setCustomerDocumentNumber(state, value) {
+      state.customerDocumentNumber = value;
+    }
+  },
   actions: {
     startStepThreeBuy: function startStepThreeBuy(_ref, stepStatus) {
       var commit = _ref.commit;
@@ -334,7 +648,7 @@ var store = (0,vuex__WEBPACK_IMPORTED_MODULE_4__.createStore)({
     },
     startStepTwoBuy: function startStepTwoBuy(_ref2, stepStatus) {
       var commit = _ref2.commit;
-      this.state.isShowingUserData = stepStatus; //Send commits if is necessary
+      this.state.isShowingUserData = stepStatus;
     },
     startStepOneBuy: function startStepOneBuy(_ref3, stepStatus) {
       var commit = _ref3.commit;

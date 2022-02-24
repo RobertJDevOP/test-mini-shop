@@ -12,9 +12,33 @@ const store = createStore({
             isShowingUserData: false,
             isShowingShop:true,
             isShowingResumeOrder:false,
+            customerName : '',
+            customerEmail : '',
+            customerPhone : '',
+            customerDocumentType : '',
+            customerDocumentNumber : '',
+            customerStreet : '',
         }
     },
     mutations: {
+        setCustomerEmail (state,value) {
+            state.customerEmail=value
+        },
+        setCustomerName (state,value) {
+            state.customerName=value
+        },
+        setCustomerPhone (state,value) {
+            state.customerPhone=value
+        },
+        setCustomerStreet (state,value) {
+            state.customerStreet=value
+        },
+        setCustomerDocumentType (state,value) {
+            state.customerDocumentType=value
+        },
+        setCustomerDocumentNumber (state,value) {
+            state.customerDocumentNumber=value
+        }
     },
     actions: {
         startStepThreeBuy ({ commit },stepStatus) {
@@ -23,7 +47,6 @@ const store = createStore({
         },
         startStepTwoBuy ({ commit },stepStatus) {
             this.state.isShowingUserData=stepStatus;
-            //Send commits if is necessary
         },
         startStepOneBuy({ commit },stepStatus){
             this.state.isShowingShop=stepStatus;

@@ -2,7 +2,7 @@
     <div v-if='getStatusComponent'>
         <section class="hero is-medium">
             <div class="container">
-                <br><br><h3 class="title is-4">Resume de tu orden</h3><br>
+                <br><br><h3 class="title is-4">Resumen de tu orden</h3><br>
 
                 <div class="columns is-centered">
                     <div class="column is-5">
@@ -71,10 +71,19 @@
                     </div>
                 </div>
 
-
-                <div class="buttons has-addons is-right">
-                    <button  @click="walletPayment"  class="button is-primary is-medium is-left">Ir a pagar</button>
+            <div class="columns">
+                <div class="column">
+                    <div class="buttons has-addons is-left">
+                        <button  @click="stepTwoBuy"  class="button is-warning is-fullwidth">Anterior</button>
+                    </div>
                 </div>
+                <div class="column">
+                    <div class="buttons has-addons is-right">
+                        <button  @click="walletPayment"  class="button is-primary is-fullwidth">Ir a pagar</button>
+                    </div>
+                </div>
+            </div>
+
 
             </div>
         </section>

@@ -10,7 +10,7 @@
                                 <div class="field">
                                     <label class="label">Nombres y apellidos</label>
                                     <div class="control">
-                                        <input class="input" type="text">
+                                        <input class="input" :value="getCustomerName"  @change="setCustomerName" type="text">
                                     </div>
                                 </div>
                             </div>
@@ -18,7 +18,7 @@
                                 <div class="field">
                                     <label class="label">Celular</label>
                                     <div class="control has-icons-left has-icons-right">
-                                        <input class="input" type="text"  >
+                                        <input class="input" :value="getCustomerPhone"  @change="setCustomerPhone" type="number">
                                         <span class="icon is-small is-left">
                                         <i class="fas fa-user"></i>
                                         </span>
@@ -29,7 +29,7 @@
                                 <div class="field">
                                     <label class="label">Email</label>
                                     <div class="control has-icons-left has-icons-right">
-                                        <input class="input" type="email" >
+                                        <input class="input" type="email" :value="getCustomerEmail"  @change="setCustomerEmail">
                                         <span class="icon is-small is-left">
                                           <i class="fas fa-envelope"></i>
                                         </span>
@@ -41,13 +41,12 @@
                             </div>
                         </div>
 
-
                         <div class="columns">
                             <div class="column is-6">
                                 <div class="field">
                                     <label class="label">Dirección de residencia</label>
                                     <div class="control">
-                                        <input class="input" type="text">
+                                        <input class="input" :value="getCustomerStreet"  @change="setCustomerStreet" type="text">
                                     </div>
                                 </div>
                             </div>
@@ -55,7 +54,7 @@
                                 <div class="field">
                                     <label class="label">Tipo de documento</label>
                                     <div class="control has-icons-left has-icons-right">
-                                        <input class="input" type="text"  >
+                                        <input class="input" :value="getCustomerDocumentType"  @change="setCustomerDocumentType" type="text"  >
                                         <span class="icon is-small is-left">
                                         <i class="fas fa-user"></i>
                                         </span>
@@ -66,7 +65,7 @@
                                 <div class="field">
                                     <label class="label">Número de documento</label>
                                     <div class="control has-icons-left has-icons-right">
-                                        <input class="input" type="number" >
+                                        <input class="input" type="number" :value="getCustomerDocumentNumber"  @change="setCustomerDocumentNumber">
                                         <span class="icon is-small is-left">
                                           <i class="fas fa-envelope"></i>
                                         </span>
@@ -80,10 +79,14 @@
 
                     <div class="columns">
                         <div class="column is-6">
-                            <button  @click="stepTwoBuy"  class="button is-warning is-medium is-fullwidth">Anterior</button>
+                            <div class="buttons has-addons is-left">
+                                <button  @click="stepTwoBuy"  class="button is-warning is-fullwidth">Anterior</button>
+                            </div>
                         </div>
                         <div class="column is-6">
-                            <button  @click="stepTreeBuy"  class="button is-primary is-medium is-fullwidth">Continuar</button>
+                            <div class="buttons has-addons is-right">
+                                <button  @click="stepTreeBuy"  class="button is-primary is-fullwidth">Continuar</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -99,6 +102,24 @@ export default {
         }
     },
     methods:{
+        setCustomerName(event) {
+            this.$store.commit('setCustomerName',event.target.value)
+        },
+        setCustomerEmail(event) {
+            this.$store.commit('setCustomerEmail',event.target.value)
+        },
+        setCustomerPhone(event) {
+            this.$store.commit('setCustomerPhone',event.target.value)
+        },
+        setCustomerStreet(event) {
+            this.$store.commit('setCustomerStreet',event.target.value)
+        },
+        setCustomerDocumentType(event) {
+            this.$store.commit('setCustomerDocumentType',event.target.value)
+        },
+        setCustomerDocumentNumber(event) {
+            this.$store.commit('setCustomerDocumentNumber',event.target.value)
+        },
         stepTreeBuy(){
             this.$store.dispatch('startStepThreeBuy',true)
             this.$store.dispatch('startStepTwoBuy',false)
@@ -111,7 +132,25 @@ export default {
     computed:{
         getStatusComponent(){
             return this.$store.state.isShowingUserData;
-        }
+        },
+        getCustomerName(){
+            return this.$store.state.customerName;
+        },
+        getCustomerPhone(){
+            return this.$store.state.customerPhone;
+        },
+        getCustomerEmail(){
+            return this.$store.state.customerEmail;
+        },
+        getCustomerStreet(){
+            return this.$store.state.customerStreet;
+        },
+        getCustomerDocumentNumber(){
+            return this.$store.state.customerDocumentNumber;
+        },
+        getCustomerDocumentType(){
+            return this.$store.state.customerDocumentType;
+        },
     }
 }
 </script>
