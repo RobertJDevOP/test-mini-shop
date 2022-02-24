@@ -4,6 +4,8 @@ import { createApp } from 'vue'
 import Shop from "./components/Shop"
 import UserDataConfirmation from "./components/UserDataConfirmation"
 import ResumeOrder from "./components/ResumeOrder";
+import ModalPayment from "./components/ModalWaitPayment"
+
 import  { createStore } from 'vuex';
 
 const store = createStore({
@@ -12,32 +14,41 @@ const store = createStore({
             isShowingUserData: false,
             isShowingShop:true,
             isShowingResumeOrder:false,
-            customerName : '',
-            customerEmail : '',
-            customerPhone : '',
-            customerDocumentType : '',
-            customerDocumentNumber : '',
-            customerStreet : '',
+            customer : {
+                customerName : '',
+                customerEmail : '',
+                customerPhone : '',
+                customerDocumentType : '',
+                customerDocumentNumber : '',
+                customerStreet : '',
+            },
+            qtyProduct:0,
+            product: {
+                'product_name' : 'Test'
+            }
         }
     },
     mutations: {
+        incrementQtyProduct (state,value) {
+            state.qtyProduct=value
+        },
         setCustomerEmail (state,value) {
-            state.customerEmail=value
+            state.customer.customerEmail=value
         },
         setCustomerName (state,value) {
-            state.customerName=value
+            state.customer.customerName=value
         },
         setCustomerPhone (state,value) {
-            state.customerPhone=value
+            state.customer.customerPhone=value
         },
         setCustomerStreet (state,value) {
-            state.customerStreet=value
+            state.customer.customerStreet=value
         },
         setCustomerDocumentType (state,value) {
-            state.customerDocumentType=value
+            state.customer.customerDocumentType=value
         },
         setCustomerDocumentNumber (state,value) {
-            state.customerDocumentNumber=value
+            state.customer.customerDocumentNumber=value
         }
     },
     actions: {
@@ -58,5 +69,6 @@ const app = createApp({})
 app.component('Shop', Shop)
 app.component('Userdataconfirmation', UserDataConfirmation)
 app.component('Resumeorder', ResumeOrder)
+app.component('Waitpayment', ModalPayment)
 app.use(store);
 app.mount('#app')

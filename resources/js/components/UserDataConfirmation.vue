@@ -134,22 +134,22 @@ export default {
             return this.$store.state.isShowingUserData;
         },
         getCustomerName(){
-            return this.$store.state.customerName;
+            return this.$store.state.customer.customerName;
         },
         getCustomerPhone(){
-            return this.$store.state.customerPhone;
+            return this.$store.state.customer.customerPhone;
         },
         getCustomerEmail(){
-            return this.$store.state.customerEmail;
+            return this.$store.state.customer.customerEmail;
         },
         getCustomerStreet(){
-            return this.$store.state.customerStreet;
+            return this.$store.state.customer.customerStreet;
         },
         getCustomerDocumentNumber(){
-            return this.$store.state.customerDocumentNumber;
+            return this.$store.state.customer.customerDocumentNumber;
         },
         getCustomerDocumentType(){
-            return this.$store.state.customerDocumentType;
+            return this.$store.state.customer.customerDocumentType;
         },
     }
 }

@@ -32,13 +32,13 @@
                                                 <div class="content">
                                                     <div class="columns">
                                                         <div class="column">
-                                                            <h3 class="title is-4">Precio: $16.199.000 </h3>
-                                                        </div>
-                                                        <div class="column">
-                                                            <h3 class="title is-4">Cantidad: 33 </h3>
+                                                            <p class="title is-5">Precio: $16.199.000 </p>
+                                                            <p class="title is-5">Cantidad: {{getProductQty}} </p>
+                                                            <p class="title is-5">Total a pagar: {{getProductQty*16199000}} </p>
                                                         </div>
                                                     </div>
                                                 </div>
+
                                             </div>
                                         </div>
                                     </div>
@@ -50,43 +50,80 @@
 
                             <h3 class="title is-4">Información del cliente</h3><br><br>
 
-                            <div class="field mb-5">
-                                <label class="label">Nombres :</label>
+                            <div class="columns">
+                                <div class="column is-6">
+                                        <label class="label is-pulled-right">Nombres :</label>
+                                </div>
+                                <div class="column is-6">
+                                      {{getCustomerName}}
+                                </div>
                             </div>
-                            <div class="field mb-5">
-                                <label class="label">Telefono celular :</label>
-                            </div>
-                            <div class="field mb-5">
-                                <label class="label">Tipo de documento :</label>
-                            </div>
-                            <div class="field mb-5">
-                                <label class="label">Numero de documento :</label>
-                            </div>
-                            <div class="field mb-5">
-                                <label class="label">Dirección de residencia :</label>
-                            </div>
-                            <div class="field mb-5">
-                                <label class="label">Email :</label>
-                            </div>
-                    </div>
-                </div>
 
-            <div class="columns">
-                <div class="column">
-                    <div class="buttons has-addons is-left">
-                        <button  @click="stepTwoBuy"  class="button is-warning is-fullwidth">Anterior</button>
-                    </div>
-                </div>
-                <div class="column">
-                    <div class="buttons has-addons is-right">
-                        <button  @click="walletPayment"  class="button is-primary is-fullwidth">Ir a pagar</button>
-                    </div>
-                </div>
-            </div>
+                        <div class="columns">
+                            <div class="column is-6">
+                                    <label class="label is-pulled-right">Telefono celular :</label>
+                            </div>
+                            <div class="column is-6">
+                                {{getCustomerPhone}}
+                            </div>
+                        </div>
 
 
+                        <div class="columns">
+                            <div class="column is-6">
+                                    <label class="label is-pulled-right">Tipo de documento :</label>
+                            </div>
+                            <div class="column is-6">
+                               {{getCustomerDocumentType}}
+                            </div>
+                        </div>
+
+                        <div class="columns ">
+                            <div class="column is-6">
+                                    <label class="label is-pulled-right">Número de documento:</label>
+                            </div>
+                            <div class="column is-6">
+                                {{getCustomerDocumentNumber}}
+                            </div>
+                        </div>
+
+
+                        <div class="columns">
+                            <div class="column is-6">
+                                    <label class="label is-pulled-right">Email:</label>
+                            </div>
+                            <div class="column is-6">
+                                {{getCustomerEmail}}
+                            </div>
+                        </div>
+
+                        <div class="columns">
+                            <div class="column is-6">
+                                    <label class="label is-pulled-right">Dirección de residencia:</label>
+                            </div>
+                            <div class="column is-6">
+                                {{getCustomerStreet}}
+                            </div>
+                        </div>
+
+
+                        <div class="columns" id="BottomDiv">
+                            <div class="column">
+                                <div class="buttons has-addons">
+                                    <button  @click="stepTwoBuy" :disabled="buttonBackDisabled"  class="button is-warning is-fullwidth">Anterior</button>
+                                </div>
+                            </div>
+                            <div class="column">
+                                <div class="buttons has-addons">
+                                    <button  @click="walletPayment" :disabled="isDisabledButton" class="button is-primary is-fullwidth">Ir a pagar</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
+        <Waitpayment :active="loaderActive" message="Please wait 5 seconds" ></Waitpayment>
     </div>
 </template>
 
@@ -94,12 +131,69 @@
 export default {
     data() {
         return {
+            loaderActive: false,
+            buttonPayDisabled:false,
+            buttonBackDisabled:false,
+        }
+    },
+    methods:{
+        showLoader () {
+            this.loaderActive = true;
+        },
+        hideLoader () {
+            this.loaderActive = false;
+        },
+        stepTwoBuy(){
+            this.$store.dispatch('startStepTwoBuy',true)
+            this.$store.dispatch('startStepThreeBuy',false)
+        },
+        walletPayment(){
+            this.buttonPayDisabled=true
+            this.buttonBackDisabled=true
+            this.showLoader();
+
+            axios.post('/walletPayment', {
+                    params : {
+                        customer  : this.$store.state.customer,
+                        qtyProduct: this.$store.state.qtyProduct,
+                        product: this.$store.state.product,
+                    }
+                },{},
+            ).then((response) => {
+                this.hideLoader();
+                window.open(response.data, '_blank')
+            })
+            .catch((error) => console.error(error))
         }
     },
     computed:{
+        isDisabledButton() {
+            return this.buttonPayDisabled;
+        },
         getStatusComponent(){
             return this.$store.state.isShowingResumeOrder;
-        }
+        },
+        getCustomerName(){
+            return this.$store.state.customer.customerName;
+        },
+        getCustomerPhone(){
+            return this.$store.state.customer.customerPhone;
+        },
+        getCustomerEmail(){
+            return this.$store.state.customer.customerEmail;
+        },
+        getCustomerStreet(){
+            return this.$store.state.customer.customerStreet;
+        },
+        getCustomerDocumentNumber(){
+            return this.$store.state.customer.customerDocumentNumber;
+        },
+        getCustomerDocumentType(){
+            return this.$store.state.customer.customerDocumentType;
+        },
+        getProductQty(){
+            return this.$store.state.qtyProduct;
+        },
     }
 }
 </script>
@@ -110,5 +204,7 @@ export default {
     height: 250px;
 
 }
-
+#BottomDiv{
+    margin-top:150px;
+}
 </style>

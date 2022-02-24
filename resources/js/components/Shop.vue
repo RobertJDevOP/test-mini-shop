@@ -33,7 +33,7 @@
                                                         <h3 class="title is-4">Precio: $16.199.000 </h3>
                                                     </div>
                                                     <div class="column">
-                                                        <h3 class="title is-4">Cantidad: <input v-model="qtyProduct" class="input" size="3" type="number" style="width: 33%;"> </h3>
+                                                        <h3 class="title is-4">Cantidad: <input :value="getCustomerDocumentNumber"  @change="setIncrementQtyProduct" class="input" size="3" type="number" style="width: 33%;"> </h3>
                                                     </div>
                                                 </div>
 
@@ -64,6 +64,9 @@ export default {
         buyProduct() {
             this.$store.dispatch('startStepOneBuy',false)
             this.$store.dispatch('startStepTwoBuy',true)
+        },
+        setIncrementQtyProduct(event){
+            this.$store.commit('incrementQtyProduct',event.target.value)
         }
     },
     computed:{
