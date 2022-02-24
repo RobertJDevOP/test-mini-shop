@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if='shopStatusComponent'>
 
     <section class="section">
         <div class="container">
@@ -53,17 +53,21 @@
 </template>
 
 <script>
+
 export default {
     data() {
         return {
-            qtyProduct: ''
+            qtyProduct: '',
+            shopStatusComponent:true,
         }
     },
     methods: {
         buyProduct() {
-            let qtyProduct =  this.qtyProduct;
+            this.shopStatusComponent=false
+            this.$store.dispatch('startStepTwoBuy')
         }
-    }
+    },
+
 }
 </script>
 

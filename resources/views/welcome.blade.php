@@ -11,6 +11,7 @@
     <body>
         <div id="app">
           <Shop></Shop>
+          <Userdataconfirmation></Userdataconfirmation>
         </div>
 
         <script src="{{ asset(mix('js/manifest.js')) }}"></script>
