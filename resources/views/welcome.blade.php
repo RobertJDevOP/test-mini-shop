@@ -10,7 +10,7 @@
     </head>
     <body>
         <div id="app">
-          <Example></Example>
+          <Shop></Shop>
         </div>
 
         <script src="{{ asset(mix('js/manifest.js')) }}"></script>
