@@ -1,5 +1,5 @@
 <template>
-    <div v-if='shopStatusComponent'>
+    <div v-if='getStatusComponent'>
 
     <section class="section">
         <div class="container">
@@ -58,15 +58,19 @@ export default {
     data() {
         return {
             qtyProduct: '',
-            shopStatusComponent:true,
         }
     },
     methods: {
         buyProduct() {
-            this.shopStatusComponent=false
-            this.$store.dispatch('startStepTwoBuy')
+            this.$store.dispatch('startStepOneBuy',false)
+            this.$store.dispatch('startStepTwoBuy',true)
         }
     },
+    computed:{
+        getStatusComponent() {
+            return this.$store.state.isShowingShop;
+        }
+    }
 
 }
 </script>

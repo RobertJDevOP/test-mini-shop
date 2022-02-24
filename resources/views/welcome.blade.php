@@ -12,6 +12,7 @@
         <div id="app">
           <Shop></Shop>
           <Userdataconfirmation></Userdataconfirmation>
+          <Resumeorder></Resumeorder>
         </div>
 
         <script src="{{ asset(mix('js/manifest.js')) }}"></script>
@@ -20,3 +21,5 @@
     </body>
 </html>
 
+<script>
+</script>
