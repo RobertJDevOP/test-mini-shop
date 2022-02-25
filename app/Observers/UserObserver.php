@@ -9,6 +9,6 @@ class UserObserver
 
     public function created(Customer $customer): void
     {
-        dd('WOOOO');
+
     }
 }

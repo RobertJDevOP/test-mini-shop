@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Api\CustomerController;
+use App\Http\Controllers\Api\GeneratePurchaseOrderController;
 use App\Http\Controllers\Api\DocumentTypeController;
 use App\Http\Controllers\Api\ProductController;
 use Illuminate\Http\Request;
@@ -13,5 +13,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::prefix('v1')->group(function () {
     Route::get('product/', [ProductController::class, 'index']);
     Route::get('documentType/', [DocumentTypeController::class, 'index']);
-    Route::post('createOrder/', [CustomerController::class, 'store']);
+    Route::post('createOrder/', [GeneratePurchaseOrderController::class, 'store']);
 });
