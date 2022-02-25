@@ -151,13 +151,13 @@ export default {
             this.buttonBackDisabled=true
             this.showLoader();
 
-            axios.post('/walletPayment', {
+            axios.post('api/v1/createOrder', {
                     params : {
                         customer  : this.$store.state.customer,
                         qtyProduct: this.$store.state.qtyProduct,
                         product: this.$store.state.product,
                     }
-                },{},
+                },
             ).then((response) => {
                 this.hideLoader();
                 window.open(response.data, '_blank')

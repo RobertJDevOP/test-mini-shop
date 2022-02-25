@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
             $table->string('document_number',16);
-            $table->string('street',255);
+            $table->string('address',255);
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

@@ -10,6 +10,6 @@ class ProductController extends Controller
 {
     public function index(Product $product):  ProductResource
     {
-        return  ProductResource::make($product);
+        return ProductResource::make($product);
     }
 }

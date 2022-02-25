@@ -14,12 +14,6 @@ return new class extends Migration
             $table->foreign('user_id')->references('id')->on('users');
         });
         Schema::table('orders', function (Blueprint $table) {
-            $table->unsignedBigInteger('requestId')->nullable();
-        });
-        Schema::table('orders', function (Blueprint $table) {
-            $table->string('processUrl')->nullable();
-        });
-        Schema::table('orders', function (Blueprint $table) {
             $table->unsignedBigInteger('qty');
         });
         Schema::table('orders', function (Blueprint $table) {
@@ -32,12 +26,6 @@ return new class extends Migration
     {
         Schema::table('orders', function (Blueprint $table) {
             $table->dropColumn('user_id');
-        });
-        Schema::table('orders', function (Blueprint $table) {
-            $table->dropColumn('requestId');
-        });
-        Schema::table('orders', function (Blueprint $table) {
-            $table->dropColumn('processUrl');
         });
         Schema::table('orders', function (Blueprint $table) {
             $table->dropColumn('qty');

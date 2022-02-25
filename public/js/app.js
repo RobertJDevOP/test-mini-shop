@@ -36,13 +36,13 @@ __webpack_require__.r(__webpack_exports__);
       this.buttonPayDisabled = true;
       this.buttonBackDisabled = true;
       this.showLoader();
-      axios.post('/walletPayment', {
+      axios.post('api/v1/createOrder', {
         params: {
           customer: this.$store.state.customer,
           qtyProduct: this.$store.state.qtyProduct,
           product: this.$store.state.product
         }
-      }, {}).then(function (response) {
+      }).then(function (response) {
         _this.hideLoader();
 
         window.open(response.data, '_blank');
