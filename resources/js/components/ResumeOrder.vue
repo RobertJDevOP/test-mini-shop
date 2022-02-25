@@ -13,14 +13,14 @@
                                         <div class="card">
                                             <div class="card-image">
                                                 <figure class="image is-4by3 ">
-                                                    <img src="http://localhost:8000/storage/pc.jpeg" alt="Placeholder image">
+                                                    <img :src="getProduct.picture">
                                                 </figure>
                                             </div>
                                             <div class="card-content">
                                                 <div class="media">
                                                     <div class="media-left">
                                                         <figure class="image is-48x48">
-                                                            <img src="http://localhost:8000/storage/pc.jpeg" alt="Placeholder image">
+                                                            <img :src="getProduct.picture">
                                                         </figure>
                                                     </div>
                                                     <div class="media-content">
@@ -188,7 +188,7 @@ export default {
             return this.$store.state.customer.customerDocumentNumber;
         },
         getCustomerDocumentType(){
-            return this.$store.state.customer.customerDocumentType;
+            return this.$store.state.customer.customerDocumentTypeLabel;
         },
         getProductQty(){
             return this.$store.state.qtyProduct;

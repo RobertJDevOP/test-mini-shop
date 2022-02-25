@@ -53,11 +53,10 @@
                             <div class="column is-3">
                                 <div class="field">
                                     <label class="label">Tipo de documento</label>
-                                    <div class="control has-icons-left has-icons-right">
-                                        <input class="input" :value="getCustomerDocumentType"  @change="setCustomerDocumentType" type="text"  >
-                                        <span class="icon is-small is-left">
-                                        <i class="fas fa-user"></i>
-                                        </span>
+                                    <div class="select">
+                                        <select v-model="typeDocumentSelected" @change="setCustomerDocumentType">
+                                            <option v-for="option in documentType" v-bind:value="option.attributes">{{option.attributes.name}}-{{option.attributes.desc}}</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -99,7 +98,15 @@
 export default {
     data() {
         return {
+            documentType : [],
+            typeDocumentSelected : []
         }
+    },
+    beforeCreate(){
+        axios.get('/api/v1/documentType')
+            .then((response) => {
+                this.documentType=response.data.data
+            }).catch((error) => console.error(error))
     },
     methods:{
         setCustomerName(event) {
@@ -115,7 +122,8 @@ export default {
             this.$store.commit('setCustomerStreet',event.target.value)
         },
         setCustomerDocumentType(event) {
-            this.$store.commit('setCustomerDocumentType',event.target.value)
+            this.$store.commit('setCustomerDocumentType',this.typeDocumentSelected.id)
+            this.$store.commit('setCustomerDocumentTypeLabel',this.typeDocumentSelected.name+'-'+this.typeDocumentSelected.desc)
         },
         setCustomerDocumentNumber(event) {
             this.$store.commit('setCustomerDocumentNumber',event.target.value)
@@ -152,6 +160,7 @@ export default {
             return this.$store.state.customer.customerDocumentType;
         },
     }
+
 }
 </script>
 

@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Customer extends Model
 {
-    protected $table = 'users';
-
     use  HasFactory;
+
+    protected $table = 'customers';
 
     protected $fillable = [
         'document_number',

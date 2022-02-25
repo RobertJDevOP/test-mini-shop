@@ -18,9 +18,10 @@ const store = createStore({
                 customerName : '',
                 customerEmail : '',
                 customerPhone : '',
-                customerDocumentType : '',
+                customerDocumentType : [],
                 customerDocumentNumber : '',
                 customerStreet : '',
+                customerDocumentTypeLabel:'',
             },
             qtyProduct:0,
             product:[]
@@ -44,6 +45,9 @@ const store = createStore({
         },
         setCustomerDocumentType (state,value) {
             state.customer.customerDocumentType=value
+        },
+        setCustomerDocumentTypeLabel(state,value){
+            state.customer.customerDocumentTypeLabel=value
         },
         setCustomerDocumentNumber (state,value) {
             state.customer.customerDocumentNumber=value
