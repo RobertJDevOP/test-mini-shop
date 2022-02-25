@@ -5,6 +5,18 @@ use Illuminate\Support\Facades\Facade;
 return [
 
     /*
+       |--------------------------------------------------------------------------
+       Dev test PlaceToPayWebCheckout Evertec
+       |--------------------------------------------------------------------------
+       |Endpoints and authentications keys
+       |
+    */
+    'placetopay_uri' => env('PLACETOPAY_URI'),
+    'placetopay_login' => env('PLACETOPAY_LOGIN'),
+    'placetopay_tranKey' => env('PLACETOPAY_TRANKEY'),
+    'placetopay_locale' => env('PLACETOPAY_LOCALE'),
+
+    /*
     |--------------------------------------------------------------------------
     | Application Name
     |--------------------------------------------------------------------------
