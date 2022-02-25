@@ -4,7 +4,7 @@ import { createApp } from 'vue'
 import Shop from "./components/Shop"
 import UserDataConfirmation from "./components/UserDataConfirmation"
 import ResumeOrder from "./components/ResumeOrder";
-import ModalPayment from "./components/ModalWaitPayment"
+import SpinnerWaitPayment from "./components/SpinnerWaitPayment"
 
 import  { createStore } from 'vuex';
 
@@ -23,9 +23,7 @@ const store = createStore({
                 customerStreet : '',
             },
             qtyProduct:0,
-            product: {
-                'product_name' : 'Test'
-            }
+            product:[]
         }
     },
     mutations: {
@@ -49,6 +47,9 @@ const store = createStore({
         },
         setCustomerDocumentNumber (state,value) {
             state.customer.customerDocumentNumber=value
+        },
+        SET_PRODUCT(state, posts){
+            state.product = posts
         }
     },
     actions: {
@@ -61,14 +62,20 @@ const store = createStore({
         },
         startStepOneBuy({ commit },stepStatus){
             this.state.isShowingShop=stepStatus;
+        },
+        getProduct({ commit }){
+            axios.get('/api/v1/product')
+                .then((response) => {
+                    commit('SET_PRODUCT', response.data.data.attributes)
+                }).catch((error) => console.error(error))
         }
-    }
+    },
 })
 
 const app = createApp({})
 app.component('Shop', Shop)
 app.component('Userdataconfirmation', UserDataConfirmation)
 app.component('Resumeorder', ResumeOrder)
-app.component('Waitpayment', ModalPayment)
+app.component('Spinnerwaitpayment', SpinnerWaitPayment)
 app.use(store);
 app.mount('#app')

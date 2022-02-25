@@ -24,15 +24,15 @@
                                                         </figure>
                                                     </div>
                                                     <div class="media-content">
-                                                        <p class="title is-6">Computador Convertible 2en1 Gaming ROG Flow X13 13.4" Pulgadas GV301QE- AMD Ryzen 9- 16 GB RAM - Disco Estado Sólido 1TB- Negro + Obsequios</p>
-                                                        <p class="subtitle is-6">Número de producto: 4711081355274</p>
+                                                        <p class="title is-3">{{getProduct.product_name}}</p>
+                                                        <p class="subtitle is-5">{{getProduct.description}}</p>
                                                     </div>
                                                 </div>
 
                                                 <div class="content">
                                                     <div class="columns">
                                                         <div class="column">
-                                                            <p class="title is-5">Precio: $16.199.000 </p>
+                                                            <p class="title is-5">Precio: ${{getProduct.price}} </p>
                                                             <p class="title is-5">Cantidad: {{getProductQty}} </p>
                                                             <p class="title is-5">Total a pagar: {{getProductQty*16199000}} </p>
                                                         </div>
@@ -106,7 +106,6 @@
                             </div>
                         </div>
 
-
                         <div class="columns" id="BottomDiv">
                             <div class="column">
                                 <div class="buttons has-addons">
@@ -123,7 +122,7 @@
                 </div>
             </div>
         </section>
-        <Waitpayment :active="loaderActive" message="Please wait 5 seconds" ></Waitpayment>
+        <Spinnerwaitpayment :active="loaderActive" message="Please wait 5 seconds" ></Spinnerwaitpayment>
     </div>
 </template>
 
@@ -194,6 +193,9 @@ export default {
         getProductQty(){
             return this.$store.state.qtyProduct;
         },
+        getProduct() {
+            return this.$store.state.product;
+        }
     }
 }
 </script>
