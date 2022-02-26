@@ -159,8 +159,8 @@ export default {
                     }
                 },
             ).then((response) => {
-                this.hideLoader();
-                window.open(response.data, '_blank')
+                window.open(response.data.processUrl, '_blank')
+                //Conectarme aca con un websocket que me indique en la otra pagina este OK es como un tipo de redireccion inteligente
             })
             .catch((error) => console.error(error))
         }
