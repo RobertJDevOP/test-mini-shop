@@ -8,6 +8,7 @@
                         <div class="box">
                             <div class="columns">
                                 <div class="column">
+                                    <button  @click="viewPurchaseOrder" class="button is-warning is-small">Ver mis compras</button>
                                     <div class="card">
                                         <div class="card-image">
                                             <figure class="image is-4by3">
@@ -37,7 +38,6 @@
                                                         <h3 class="title is-4">Cantidad: <input :value="getPrdouctQty"  @change="setIncrementQtyProduct" class="input" size="3" type="number" style="width: 30%;height: 30px;"> </h3>
                                                     </div>
                                                 </div>
-
                                                 <button  @click="buyProduct"  class="button is-primary is-medium is-fullwidth">Comprar</button>
                                             </div>
                                         </div>
@@ -68,6 +68,10 @@ export default {
         },
         setIncrementQtyProduct(event){
             this.$store.commit('incrementQtyProduct',event.target.value)
+        },
+        viewPurchaseOrder(){
+            this.$store.dispatch('startStepOneBuy',false)
+            this.$store.dispatch('startPurchaseOrderHistory',true)
         }
     },
     computed:{

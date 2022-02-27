@@ -27,4 +27,12 @@ class PlacetopayJsonResponses
        return $response;
     }
 
+    public static function transactionRecordRejected(array $response,int $purchaseOrderId): array
+    {
+        Store::execute($response,$purchaseOrderId);
+
+        return $response;
+    }
+
+
 }

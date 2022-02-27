@@ -24,7 +24,7 @@ class PlacetopayResponse
         PlacetopayStatusResponses::OK => PlacetopayJsonResponses::transactionRecordOK($this->body,$this->purchaseOrderId),
         PlacetopayStatusResponses::FAILED => PlacetopayJsonResponses::transactionRecordFailed($this->body),
         PlacetopayStatusResponses::APPROVED => PlacetopayJsonResponses::transactionRecordApproved($this->body,$this->purchaseOrderId),
-        PlacetopayStatusResponses::REJECTED => '',
+        PlacetopayStatusResponses::REJECTED => PlacetopayJsonResponses::transactionRecordRejected($this->body,$this->purchaseOrderId),
         };
     }
 }

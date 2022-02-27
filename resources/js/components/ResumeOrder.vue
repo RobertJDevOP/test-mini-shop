@@ -127,7 +127,11 @@
 </template>
 
 <script>
+function ok(){
+    return 'hola';
+}
 export default {
+
     data() {
         return {
             loaderActive: false,
@@ -158,11 +162,22 @@ export default {
                     }
                 },
             ).then((response) => {
-                window.open(response.data.processUrl, '_blank')
-                //Conectarme aca con un websocket que me indique en la otra pagina este OK es como un tipo de redireccion inteligente
-                window.close()
+               P.init(response.data.processUrl, { opacity: 0.4 });
+               P.on('response', function(data) {
+                   localStorage.setItem('statusTransaction',  data.status.status);
+                   localStorage.setItem('messageTransaction',  data.status.message);
+                   window.dispatchEvent(new CustomEvent('event-when-client-return-ecommerce', {
+                       detail: {
+                           statusTransaction: localStorage.getItem('statusTransaction'),
+                           messageTransaction: localStorage.getItem('messageTransaction')
+                       }
+                   }));
+               })
             })
             .catch((error) => console.error(error))
+
+            this.$store.dispatch('startStepFourBuy',true)
+            this.$store.dispatch('startStepThreeBuy',false)
         }
     },
     computed:{
@@ -196,7 +211,8 @@ export default {
         getProduct() {
             return this.$store.state.product;
         }
-    }
+    },
+
 }
 </script>
 

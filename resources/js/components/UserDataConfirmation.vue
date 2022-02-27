@@ -1,4 +1,4 @@
-8<template>
+<template>
         <div v-if='getStatusComponent'>
 
             <section class="hero is-medium">
