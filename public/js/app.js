@@ -42,6 +42,8 @@ __webpack_require__.r(__webpack_exports__);
         }
       }).then(function (response) {
         window.open(response.data.processUrl, '_blank'); //Conectarme aca con un websocket que me indique en la otra pagina este OK es como un tipo de redireccion inteligente
+
+        window.close();
       })["catch"](function (error) {
         return console.error(error);
       });
