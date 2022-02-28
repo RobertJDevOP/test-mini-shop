@@ -10,3 +10,4 @@ Route::get('/', function () {
 
 Route::name('shop.checkout')->get('/checkout/{purchaseOrder}/', [PaymentController::class, 'createRequest']);
 Route::name('payment.checkout')->get('/payment/{order}',[PaymentController::class,'getRequestInformation']);
+Route::name('payment.continue')->get('/continuePayment/{order}',[PaymentController::class,'continuePayment']);

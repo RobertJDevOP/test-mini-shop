@@ -14,6 +14,5 @@ class PurchasePaymentObserver
         || PurchaseOrderStatus::REJECTED === $purchasePayment->status){
             PurchaseOrder::where('id', $purchasePayment->id_purchase_order)->update(['status' => $purchasePayment->status]);
         }
-
     }
 }

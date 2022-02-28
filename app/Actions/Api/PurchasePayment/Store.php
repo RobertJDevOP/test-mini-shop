@@ -20,7 +20,6 @@ class Store
             $statusTransaction = $data['status']['status'];
         }
 
-
         $purchasePayment = new PurchasePayment();
         $purchasePayment->id_purchase_order = $purchaseOrderId;
         $purchasePayment->requestId = $data['requestId'];

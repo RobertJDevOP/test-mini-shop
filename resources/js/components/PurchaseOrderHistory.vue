@@ -6,8 +6,9 @@
             <div class="container">
                 <div class="columns is-centered">
                     <div class="column is-half">
-                       <h3 class="title is-4">  Historial de pagos electronicos  </h3><br>
+                       <h3 class="title is-4">  Historial de pagos electronicos  </h3>
                         <button  @click="goToStepOne"  class="button is-primary is-small">Volver</button>
+                        <br><br>
                         <table class="table">
                             <thead>
                             <tr>
@@ -15,7 +16,7 @@
                                 <th>Quantity</th>
                                 <th>Total</th>
                                 <th>Estado</th>
-                                <th>Creada</th>
+                                <th>Fecha de creación</th>
                                 <th>Acciones</th>
                             </tr>
                             </thead>
@@ -29,7 +30,10 @@
                                 <td>
                                     <button  @click="viewDetail(purchase)" class="button is-primary is-small">Ver detalle</button>
                                     <div v-if="purchase.status === 'REJECTED'">
-                                        <button  @click="retryPayment"  class="button is-warning is-small">Re intentar pago</button>
+                                        <button  @click="retryPayment(purchase.id)"  class="button is-warning is-small">Re intentar pago</button>
+                                    </div>
+                                    <div v-if="purchase.status === 'CREATED'">
+                                        <button  @click="continuePayment(purchase.id)"  class="button is-warning is-small">Continuar con el pago</button>
                                     </div>
                                 </td>
                             </tr>
@@ -95,7 +99,41 @@ export default {
             this.purchaseOrderDetail = index.details_order;
             this.showModal = true
         },
-        retryPayment(){
+        retryPayment(purchaseOrderId){
+            this.$store.commit('setPurchaseOrderId',purchaseOrderId);
+            axios.get('checkout/'+purchaseOrderId)
+                .then((response) => {
+                    P.init(response.data.processUrl, { opacity: 0.4 });
+                    P.on('response', function(data) {
+                        localStorage.setItem('statusTransaction',  data.status.status);
+                        localStorage.setItem('messageTransaction',  data.status.message);
+
+                        window.dispatchEvent(new CustomEvent('event-when-client-return-ecommerce', {
+                            detail: {
+                                statusTransaction: localStorage.getItem('statusTransaction'),
+                                messageTransaction: localStorage.getItem('messageTransaction')
+                            }
+                        }));
+                    })
+                }).catch((error) => console.error(error))
+        },
+        continuePayment(purchaseOrderId){
+            this.$store.commit('setPurchaseOrderId',purchaseOrderId);
+            axios.get('continuePayment/'+purchaseOrderId)
+                .then((response) => {
+                    P.init(response.data, { opacity: 0.4 });
+                    P.on('response', function(data) {
+                        localStorage.setItem('statusTransaction',  data.status.status);
+                        localStorage.setItem('messageTransaction',  data.status.message);
+
+                        window.dispatchEvent(new CustomEvent('event-when-client-return-ecommerce', {
+                            detail: {
+                                statusTransaction: localStorage.getItem('statusTransaction'),
+                                messageTransaction: localStorage.getItem('messageTransaction')
+                            }
+                        }));
+                    })
+                }).catch((error) => console.error(error))
         },
     },
     beforeCreate() {

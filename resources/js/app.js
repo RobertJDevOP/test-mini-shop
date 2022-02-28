@@ -107,7 +107,6 @@ const store = createStore({
         getProduct({ commit }){
             axios.get('/api/v1/product')
                 .then((response) => {
-                    console.log('que monda');
                     commit('SET_PRODUCT', response.data.data.attributes)
                 }).catch((error) => console.error(error))
         }

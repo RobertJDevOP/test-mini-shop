@@ -127,9 +127,7 @@
 </template>
 
 <script>
-function ok(){
-    return 'hola';
-}
+
 export default {
 
     data() {
@@ -162,8 +160,8 @@ export default {
                     }
                 },
             ).then((response) => {
-                console.log( response.data.purchaseOrderId)
-                this.$store.commit('setPurchaseOrderId', response.data.purchaseOrderId)
+                this.$store.commit('setPurchaseOrderId', response.data.purchaseOrderId);
+
                P.init(response.data.processUrl, { opacity: 0.4 });
                P.on('response', function(data) {
                    localStorage.setItem('statusTransaction',  data.status.status);
@@ -178,7 +176,6 @@ export default {
                })
             })
             .catch((error) => console.error(error))
-
             this.$store.dispatch('startStepFourBuy',true)
             this.$store.dispatch('startStepThreeBuy',false)
         }
