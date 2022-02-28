@@ -122,7 +122,7 @@
                 </div>
             </div>
         </section>
-        <Spinnerwaitpayment :active="loaderActive" message="Please wait 5 seconds" ></Spinnerwaitpayment>
+
     </div>
 </template>
 
@@ -138,12 +138,6 @@ export default {
         }
     },
     methods:{
-        showLoader () {
-            this.loaderActive = true;
-        },
-        hideLoader () {
-            this.loaderActive = false;
-        },
         stepTwoBuy(){
             this.$store.dispatch('startStepTwoBuy',true)
             this.$store.dispatch('startStepThreeBuy',false)
@@ -151,7 +145,6 @@ export default {
         walletPayment(){
             this.buttonPayDisabled=true
             this.buttonBackDisabled=true
-            this.showLoader();
             axios.post('api/v1/createOrder', {
                     params : {
                         customer  : this.$store.state.customer,

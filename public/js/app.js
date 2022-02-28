@@ -41,7 +41,7 @@ __webpack_require__.r(__webpack_exports__);
         P.on('response', function (data) {
           localStorage.setItem('statusTransaction', data.status.status);
           localStorage.setItem('messageTransaction', data.status.message);
-          window.dispatchEvent(new CustomEvent('event-when-client-return-ecommerce', {
+          window.dispatchEvent(new CustomEvent('event-when-client-return-ecommerce-retry-payment', {
             detail: {
               statusTransaction: localStorage.getItem('statusTransaction'),
               messageTransaction: localStorage.getItem('messageTransaction')
@@ -118,12 +118,6 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    showLoader: function showLoader() {
-      this.loaderActive = true;
-    },
-    hideLoader: function hideLoader() {
-      this.loaderActive = false;
-    },
     stepTwoBuy: function stepTwoBuy() {
       this.$store.dispatch('startStepTwoBuy', true);
       this.$store.dispatch('startStepThreeBuy', false);
@@ -133,7 +127,6 @@ __webpack_require__.r(__webpack_exports__);
 
       this.buttonPayDisabled = true;
       this.buttonBackDisabled = true;
-      this.showLoader();
       axios.post('api/v1/createOrder', {
         params: {
           customer: this.$store.state.customer,
@@ -214,7 +207,8 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       statusTransaction: null,
-      messageTransaction: ''
+      messageTransaction: '',
+      loaderActive: false
     };
   },
   methods: {
@@ -225,11 +219,18 @@ __webpack_require__.r(__webpack_exports__);
     viewPurchaseOrders: function viewPurchaseOrders() {
       this.$store.dispatch('startStepFourBuy', false);
       this.$store.dispatch('startPurchaseOrderHistory', true);
+    },
+    showLoader: function showLoader() {
+      this.loaderActive = true;
+    },
+    hideLoader: function hideLoader() {
+      this.loaderActive = false;
     }
   },
   mounted: function mounted() {
     var _this = this;
 
+    this.showLoader();
     window.addEventListener('event-when-client-return-ecommerce', function (event) {
       axios.get('payment/' + _this.$store.state.purchaseOrderId, {}).then(function (response) {});
       axios.get('/api/v1/purchases').then(function (response) {
@@ -239,6 +240,19 @@ __webpack_require__.r(__webpack_exports__);
       });
       _this.statusTransaction = event.detail.statusTransaction;
       _this.messageTransaction = event.detail.messageTransaction;
+
+      _this.hideLoader();
+    });
+    window.addEventListener('event-when-client-return-ecommerce-retry-payment', function (event) {
+      axios.get('/api/v1/purchases').then(function (response) {
+        _this.$store.commit('setPurchases', response.data);
+      })["catch"](function (error) {
+        return console.error(error);
+      });
+      _this.statusTransaction = event.detail.statusTransaction;
+      _this.messageTransaction = event.detail.messageTransaction;
+
+      _this.hideLoader();
     });
   },
   computed: {
@@ -846,8 +860,6 @@ var _hoisted_59 = {
 };
 var _hoisted_60 = ["disabled"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  var _component_Spinnerwaitpayment = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Spinnerwaitpayment");
-
   return $options.getStatusComponent ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [_hoisted_4, _hoisted_5, _hoisted_6, _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("figure", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
     src: $options.getProduct.picture
   }, null, 8
@@ -894,12 +906,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "button is-primary is-fullwidth"
   }, "Ir a pagar", 8
   /* PROPS */
-  , _hoisted_60)])])])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Spinnerwaitpayment, {
-    active: $data.loaderActive,
-    message: "Please wait 5 seconds"
-  }, null, 8
-  /* PROPS */
-  , ["active"])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true);
+  , _hoisted_60)])])])])])])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true);
 }
 
 /***/ }),
@@ -984,6 +991,8 @@ var _hoisted_20 = {
   "class": "column"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _component_Spinnerwaitpayment = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Spinnerwaitpayment");
+
   return $options.getStatusComponent ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [_hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", _hoisted_15, "Estado de la transaccion: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.statusTransaction), 1
   /* TEXT */
   ), _hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", _hoisted_17, "Mensaje: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.messageTransaction), 1
@@ -998,7 +1007,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return $options.stepOneBuy && $options.stepOneBuy.apply($options, arguments);
     }),
     "class": "button is-primary is-medium is-fullwidth"
-  }, "Seguir comprando")])])])])])])])])])])])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true);
+  }, "Seguir comprando")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Spinnerwaitpayment, {
+    active: $data.loaderActive,
+    message: "Please wait 5 seconds"
+  }, null, 8
+  /* PROPS */
+  , ["active"])])])])])])])])])])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true);
 }
 
 /***/ }),

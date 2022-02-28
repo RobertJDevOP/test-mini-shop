@@ -3,6 +3,7 @@
 namespace App\Actions\Api\PurchasePayment;
 
 use App\Models\PurchasePayment;
+use Illuminate\Support\Facades\Log;
 
 class Store
 {
@@ -10,11 +11,7 @@ class Store
     {
         if('OK' === $data['status']['status']){
             $statusTransaction = 'CREATED';
-        }else{
-            $statusTransaction = $data['status']['status'];
-        }
-
-        if('APPROVED' === $data['status']['status']){
+        }else if('APPROVED' === $data['status']['status']) {
             $statusTransaction = 'PAYED';
         }else{
             $statusTransaction = $data['status']['status'];

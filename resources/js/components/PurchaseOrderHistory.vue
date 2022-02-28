@@ -108,7 +108,7 @@ export default {
                         localStorage.setItem('statusTransaction',  data.status.status);
                         localStorage.setItem('messageTransaction',  data.status.message);
 
-                        window.dispatchEvent(new CustomEvent('event-when-client-return-ecommerce', {
+                        window.dispatchEvent(new CustomEvent('event-when-client-return-ecommerce-retry-payment', {
                             detail: {
                                 statusTransaction: localStorage.getItem('statusTransaction'),
                                 messageTransaction: localStorage.getItem('messageTransaction')

@@ -27,6 +27,7 @@
                                                     </div>
                                                 </div>
 
+                                                <Spinnerwaitpayment :active="loaderActive" message="Please wait 5 seconds" ></Spinnerwaitpayment>
                                             </div>
                                         </div>
                                     </div>
@@ -45,7 +46,8 @@ export default {
     data() {
         return {
             statusTransaction : null,
-            messageTransaction : ''
+            messageTransaction : '',
+            loaderActive: false,
         }
     },
     methods:{
@@ -56,15 +58,20 @@ export default {
         viewPurchaseOrders(){
             this.$store.dispatch('startStepFourBuy',false)
             this.$store.dispatch('startPurchaseOrderHistory',true)
-        }
+        },
+        showLoader () {
+            this.loaderActive = true;
+        },
+        hideLoader () {
+            this.loaderActive = false;
+        },
     },
     mounted() {
+        this.showLoader();
         window.addEventListener('event-when-client-return-ecommerce', (event) => {
-
             axios.get('payment/'+this.$store.state.purchaseOrderId, {})
             .then((response) => {
             })
-
             axios.get('/api/v1/purchases')
                 .then((response) => {
                     this.$store.commit('setPurchases',response.data)
@@ -72,6 +79,17 @@ export default {
 
             this.statusTransaction = event.detail.statusTransaction;
             this.messageTransaction = event.detail.messageTransaction;
+            this.hideLoader()
+        });
+        window.addEventListener('event-when-client-return-ecommerce-retry-payment', (event) => {
+            axios.get('/api/v1/purchases')
+                .then((response) => {
+                    this.$store.commit('setPurchases',response.data)
+                }).catch((error) => console.error(error))
+
+            this.statusTransaction = event.detail.statusTransaction;
+            this.messageTransaction = event.detail.messageTransaction;
+            this.hideLoader()
         });
     },
     computed:{
