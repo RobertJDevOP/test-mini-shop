@@ -87,6 +87,7 @@ const store = createStore({
         getProduct({ commit }){
             axios.get('/api/v1/product')
                 .then((response) => {
+                    console.log('que monda');
                     commit('SET_PRODUCT', response.data.data.attributes)
                 }).catch((error) => console.error(error))
         }
@@ -100,5 +101,5 @@ app.component('Resumeorder', ResumeOrder)
 app.component('Spinnerwaitpayment', SpinnerWaitPayment)
 app.component('Resumetransaction', ResumeTransaction)
 app.component('Purchaseorderhistory', PurchaseOrderHistory)
-app.use(store);
+app.use(store)
 app.mount('#app')

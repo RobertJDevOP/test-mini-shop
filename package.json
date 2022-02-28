@@ -21,6 +21,7 @@
     },
     "dependencies": {
         "vue": "^3.2.31",
+        "vue-final-modal": "^3.4.3",
         "vue-loader": "^17.0.0",
         "vuex": "^4.0.2"
     }

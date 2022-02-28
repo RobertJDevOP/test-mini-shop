@@ -14,9 +14,8 @@ class PurchaseOrderController extends Controller
 
         foreach ($purchaseOrders as $row){
             $ordersPaymentDetails[$row->id]=$row;
-
-            foreach ($row->purchasePaymentsStatus as $row2){
-                $ordersPaymentDetails[$row->id][$row2->id_purchase_order]=$row2['purchase_payments_status'];
+            foreach ($row->detailsOrder as $row2){
+                $ordersPaymentDetails[$row->id][$row2->purchase_order_id]=$row2['details_order'];
             }
         }
 
