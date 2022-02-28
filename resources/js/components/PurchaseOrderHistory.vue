@@ -103,6 +103,7 @@ export default {
             this.$store.commit('setPurchaseOrderId',purchaseOrderId);
             axios.get('checkout/'+purchaseOrderId)
                 .then((response) => {
+                    console.log(response.data);
                     P.init(response.data.processUrl, { opacity: 0.4 });
                     P.on('response', function(data) {
                         localStorage.setItem('statusTransaction',  data.status.status);

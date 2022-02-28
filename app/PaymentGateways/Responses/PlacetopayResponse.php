@@ -8,7 +8,7 @@ use App\Helpers\PlacetopayJsonResponses;
 class PlacetopayResponse
 {
     private array $body;
-    private int $purchaseOrderId;
+    private ?int $purchaseOrderId;
 
     public function __construct(array $body,int $purchaseOrderId)
     {

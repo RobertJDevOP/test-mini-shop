@@ -15,7 +15,6 @@ class PaymentController extends Controller
         $obj = new PlacetopayWebCheckout($purchaseOrder,null);
         $response = $obj->createRequest();
 
-        dd($response);
         return response()->json($response);
     }
 
@@ -33,7 +32,7 @@ class PaymentController extends Controller
         $purchasePayment = PurchasePayment::select('processUrl')->where('id_purchase_order', $purchaseOrderId)
             ->latest('id_purchase_payment')->first();
 
-       return response()->json($purchasePayment->processUrl);
+       return response()->json(['processUrl' => $purchasePayment->processUrl]);
     }
 
 }

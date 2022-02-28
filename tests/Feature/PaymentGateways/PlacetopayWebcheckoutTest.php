@@ -7,8 +7,11 @@ use App\Models\Customer;
 use App\Models\PurchaseOrder;
 use App\Models\PurchaseOrderDetail;
 use App\PaymentGateways\PlacetopayWebCheckout;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Testing\Fluent\AssertableJson;
+use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
 class PlacetopayWebcheckoutTest extends TestCase
@@ -17,18 +20,51 @@ class PlacetopayWebcheckoutTest extends TestCase
 
     public function test_it_get_a_redirect_url_as_response(): void
     {
-        $purchaseOrder = $this->fakeHttpCreateRequest();
+        $purchaseOrder = $this->createPurchaseOrder();
         Http::fake([
             'https://dev.placetopay.com/redirection/*' => Http::response($this->placetopayResponse(),200)
         ]);
-        $obj = new PlacetopayWebCheckout($purchaseOrder,null);
+        $paymentGateway = new PlacetopayWebCheckout($purchaseOrder,null);
 
-        $response = $obj->createRequest();
+        $response = $paymentGateway->createRequest();
 
         $this->assertNotNull($response['processUrl']);
     }
 
-    public function fakeHttpCreateRequest()
+    public function test_it_get_request_information(): void
+    {
+        $placeToPayResponse = $this->placetopayResponse();
+        $purchaseOrder = $this->createPurchaseOrder();
+        Http::fake([
+            'https://checkout-co.placetopay.dev/api/session/123123' => Http::response($placeToPayResponse,200)
+        ]);
+        $paymentWallet = new PlacetopayWebCheckout($purchaseOrder->id,$placeToPayResponse['requestId']);
+
+        $response= $paymentWallet->getRequestInformation();
+
+        $this->assertEquals($placeToPayResponse['requestId'], $response['requestId']);
+    }
+
+    public function test_it_can_continue_payment(): void
+    {
+        $placeToPayResponse = $this->placetopayResponse();
+        $purchaseOrder = $this->createPurchaseOrder();
+        Http::fake([
+            'https://checkout-co.placetopay.dev/api/session/123123' => Http::response($placeToPayResponse,200)
+        ]);
+        $paymentWallet = new PlacetopayWebCheckout($purchaseOrder->id,$placeToPayResponse['requestId']);
+        $paymentWallet->getRequestInformation();
+
+        $response = $this->getJson('/continuePayment/'.$purchaseOrder->id);
+
+        $response->assertStatus(Response::HTTP_OK);
+        $response
+            ->assertJson(fn (AssertableJson $json) =>
+            $json->where('processUrl', $placeToPayResponse['processUrl'])
+            );
+    }
+
+    public function createPurchaseOrder(): Model
     {
         Customer::factory()->create();
 
