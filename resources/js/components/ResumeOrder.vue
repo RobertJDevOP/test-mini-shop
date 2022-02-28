@@ -166,6 +166,7 @@ export default {
                P.on('response', function(data) {
                    localStorage.setItem('statusTransaction',  data.status.status);
                    localStorage.setItem('messageTransaction',  data.status.message);
+
                    window.dispatchEvent(new CustomEvent('event-when-client-return-ecommerce', {
                        detail: {
                            statusTransaction: localStorage.getItem('statusTransaction'),

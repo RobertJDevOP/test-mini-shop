@@ -162,44 +162,9 @@ function ok() {
 /*!***********************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/ResumeTransaction.vue?vue&type=script&lang=js ***!
   \***********************************************************************************************************************************************************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+/***/ (() => {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  data: function data() {
-    return {
-      statusTransaction: null,
-      messageTransaction: ''
-    };
-  },
-  methods: {
-    stepOneBuy: function stepOneBuy() {
-      this.$store.dispatch('startStepFourBuy', false);
-      this.$store.dispatch('startStepOneBuy', true);
-    },
-    viewPurchaseOrders: function viewPurchaseOrders() {
-      this.$store.dispatch('startStepFourBuy', false);
-      this.$store.dispatch('startPurchaseOrderHistory', true);
-    }
-  },
-  mounted: function mounted() {
-    var _this = this;
-
-    window.addEventListener('event-when-client-return-ecommerce', function (event) {
-      _this.statusTransaction = event.detail.statusTransaction;
-      _this.messageTransaction = event.detail.messageTransaction;
-    });
-  },
-  computed: {
-    getStatusComponent: function getStatusComponent() {
-      return this.$store.state.isShowingTransactionResult;
-    }
-  }
-});
+throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nSyntaxError: C:\\Users\\Robertico\\Documents\\test-mini-shop\\resources\\js\\components\\ResumeTransaction.vue: Unexpected token (24:69)\n\n\u001b[0m \u001b[90m 22 |\u001b[39m             axios\u001b[33m.\u001b[39mpost(\u001b[32m'api/v1/paymentStatus/'\u001b[39m\u001b[33m,\u001b[39m {\u001b[0m\n\u001b[0m \u001b[90m 23 |\u001b[39m                     params \u001b[33m:\u001b[39m {\u001b[0m\n\u001b[0m\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 24 |\u001b[39m                         idPurchaseOrder  \u001b[33m:\u001b[39m \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39m$store\u001b[33m.\u001b[39mstate\u001b[33m.\u001b[39mproduct\u001b[33m.\u001b[39m\u001b[33m,\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m    |\u001b[39m                                                                      \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\u001b[0m\n\u001b[0m \u001b[90m 25 |\u001b[39m                     }\u001b[0m\n\u001b[0m \u001b[90m 26 |\u001b[39m             })\u001b[33m.\u001b[39mthen((response) \u001b[33m=>\u001b[39m {\u001b[0m\n\u001b[0m \u001b[90m 27 |\u001b[39m\u001b[0m\n    at Parser._raise (C:\\Users\\Robertico\\Documents\\test-mini-shop\\node_modules\\@babel\\parser\\lib\\index.js:476:17)\n    at Parser.raiseWithData (C:\\Users\\Robertico\\Documents\\test-mini-shop\\node_modules\\@babel\\parser\\lib\\index.js:469:17)\n    at Parser.raise (C:\\Users\\Robertico\\Documents\\test-mini-shop\\node_modules\\@babel\\parser\\lib\\index.js:430:17)\n    at Parser.unexpected (C:\\Users\\Robertico\\Documents\\test-mini-shop\\node_modules\\@babel\\parser\\lib\\index.js:3789:16)\n    at Parser.parseIdentifierName (C:\\Users\\Robertico\\Documents\\test-mini-shop\\node_modules\\@babel\\parser\\lib\\index.js:13564:18)\n    at Parser.parseIdentifier (C:\\Users\\Robertico\\Documents\\test-mini-shop\\node_modules\\@babel\\parser\\lib\\index.js:13544:23)\n    at Parser.parseMember (C:\\Users\\Robertico\\Documents\\test-mini-shop\\node_modules\\@babel\\parser\\lib\\index.js:12228:28)\n    at Parser.parseSubscript (C:\\Users\\Robertico\\Documents\\test-mini-shop\\node_modules\\@babel\\parser\\lib\\index.js:12202:21)\n    at Parser.parseSubscripts (C:\\Users\\Robertico\\Documents\\test-mini-shop\\node_modules\\@babel\\parser\\lib\\index.js:12166:19)\n    at Parser.parseExprSubscripts (C:\\Users\\Robertico\\Documents\\test-mini-shop\\node_modules\\@babel\\parser\\lib\\index.js:12155:17)");
 
 /***/ }),
 
@@ -916,19 +881,19 @@ var _hoisted_19 = {
 var _hoisted_20 = {
   "class": "column"
 };
-function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return $options.getStatusComponent ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [_hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", _hoisted_15, "Estado de la transaccion: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.statusTransaction), 1
+function render(_ctx, _cache) {
+  return _ctx.getStatusComponent ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [_hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", _hoisted_15, "Estado de la transaccion: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.statusTransaction), 1
   /* TEXT */
-  ), _hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", _hoisted_17, "Mensaje: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.messageTransaction), 1
+  ), _hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", _hoisted_17, "Mensaje: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.messageTransaction), 1
   /* TEXT */
   )])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     onClick: _cache[0] || (_cache[0] = function () {
-      return $options.viewPurchaseOrders && $options.viewPurchaseOrders.apply($options, arguments);
+      return _ctx.viewPurchaseOrders && _ctx.viewPurchaseOrders.apply(_ctx, arguments);
     }),
     "class": "button is-primary is-medium is-fullwidth"
   }, "Ver mis compras")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     onClick: _cache[1] || (_cache[1] = function () {
-      return $options.stepOneBuy && $options.stepOneBuy.apply($options, arguments);
+      return _ctx.stepOneBuy && _ctx.stepOneBuy.apply(_ctx, arguments);
     }),
     "class": "button is-primary is-medium is-fullwidth"
   }, "Seguir comprando")])])])])])])])])])])])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true);
@@ -1421,7 +1386,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_SpinnerWaitPayment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/SpinnerWaitPayment */ "./resources/js/components/SpinnerWaitPayment.vue");
 /* harmony import */ var _components_ResumeTransaction__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/ResumeTransaction */ "./resources/js/components/ResumeTransaction.vue");
 /* harmony import */ var _components_PurchaseOrderHistory__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/PurchaseOrderHistory */ "./resources/js/components/PurchaseOrderHistory.vue");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm-bundler.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm-bundler.js");
+/* harmony import */ var laravel_echo__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! laravel-echo */ "./node_modules/laravel-echo/dist/echo.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
@@ -1432,7 +1398,19 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
 
-var store = (0,vuex__WEBPACK_IMPORTED_MODULE_7__.createStore)({
+
+/*
+window.Pusher = require('pusher-js')
+window.Echo = new Echo({
+    broadcaster: 'pusher',
+    key: process.env.MIX_PUSHER_APP_KEY,
+    wsHost: window.location.hostname,
+    wsPort: 6001,
+    disableStats: true,
+    forceTLS: false,
+})*/
+
+var store = (0,vuex__WEBPACK_IMPORTED_MODULE_8__.createStore)({
   state: function state() {
     return {
       isShowingUserData: false,
@@ -1452,7 +1430,8 @@ var store = (0,vuex__WEBPACK_IMPORTED_MODULE_7__.createStore)({
         transactionStatus: ''
       },
       qtyProduct: 0,
-      product: []
+      product: [],
+      idPurchaseOrderId: ''
     };
   },
   mutations: {

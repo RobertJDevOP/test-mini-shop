@@ -60,6 +60,15 @@ export default {
     },
     mounted() {
         window.addEventListener('event-when-client-return-ecommerce', (event) => {
+
+            axios.post('api/v1/paymentStatus/', {
+                    params : {
+                        idPurchaseOrder  : this.$store.state.product.,
+                    }
+            }).then((response) => {
+
+            })
+
             this.statusTransaction = event.detail.statusTransaction;
             this.messageTransaction = event.detail.messageTransaction;
         });
