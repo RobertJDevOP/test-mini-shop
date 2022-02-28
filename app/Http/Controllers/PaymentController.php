@@ -17,10 +17,11 @@ class PaymentController extends Controller
         $obj = new PlacetopayWebCheckout($purchaseOrder,null);
         $response = $obj->createRequest();
 
+
         return response()->json($response);
     }
 
-    public function getRequestInformation(int $purchaseOrderId): View
+    public function getRequestInformation(int $purchaseOrderId)//: View
     {
         $purchasePaymentStatus=PurchasePayment::select('requestId')->where('id_purchase_order', $purchaseOrderId)
             ->latest('id_purchase_payment')->first();
@@ -28,9 +29,10 @@ class PaymentController extends Controller
         $obj = new PlacetopayWebCheckout($purchaseOrderId,$purchasePaymentStatus->requestId);
         $response = $obj->getRequestInformation();
 
+        /*
         $purchaseOrder=PurchasePayment::select('status','id_purchase_order')->where('id_purchase_order', $purchaseOrderId)
-            ->latest('id_purchase_payment')->first();;
+            ->latest('id_purchase_payment')->first();*/
 
-        return view('payment.index')->with('purchaseOrder', $purchaseOrder);
+        //
     }
 }

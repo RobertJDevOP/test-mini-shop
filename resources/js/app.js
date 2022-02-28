@@ -41,13 +41,20 @@ const store = createStore({
                 transactionStatus:'',
             },
             qtyProduct:0,
-            product:[],
-            idPurchaseOrderId: ''
+            purchaseOrderId : '',
+            purchases : [],
+            product: [],
         }
     },
     mutations: {
         incrementQtyProduct (state,value) {
             state.qtyProduct=value
+        },
+        setPurchaseOrderId (state,value) {
+            state.purchaseOrderId=value
+        },
+        setPurchases (state,value) {
+            state.purchases=value
         },
         setCustomerEmail (state,value) {
             state.customer.customerEmail=value

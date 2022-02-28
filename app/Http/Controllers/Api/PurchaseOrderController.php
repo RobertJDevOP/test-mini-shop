@@ -4,10 +4,11 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\PurchaseOrder;
+use Illuminate\Http\JsonResponse;
 
 class PurchaseOrderController extends Controller
 {
-    public function index(): \Illuminate\Http\JsonResponse
+    public function index(): JsonResponse
     {
         $purchaseOrders = PurchaseOrder::all();
         $ordersPaymentDetails = array();

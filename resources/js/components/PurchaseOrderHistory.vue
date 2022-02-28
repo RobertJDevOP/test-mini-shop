@@ -20,7 +20,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr v-for="(purchase,index) in purchases" :key="purchase.id" >
+                            <tr v-for="(purchase,index) in getPurchases" :key="purchase.id" >
                                 <td>{{purchase.id}}</td>
                                 <td>{{purchase.qty}}</td>
                                 <td>{{purchase.total}}</td>
@@ -82,7 +82,6 @@ export default {
     },
     data() {
         return {
-            purchases : [],
             showModal: false,
             purchaseOrderDetail : []
         }
@@ -102,7 +101,7 @@ export default {
     beforeCreate() {
         axios.get('/api/v1/purchases')
             .then((response) => {
-                this.purchases = response.data
+                this.$store.commit('setPurchases',response.data)
             }).catch((error) => console.error(error))
     },
     mounted(){
@@ -111,6 +110,9 @@ export default {
     computed:{
         getStatusComponent(){
             return this.$store.state.isShowingPurchaseOrderHistory;
+        },
+        getPurchases(){
+            return this.$store.state.purchases;
         },
         getProduct(){
             return this.$store.state.product;

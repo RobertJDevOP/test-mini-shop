@@ -6,7 +6,7 @@ class PlacetopayStatusResponses
 {
     public const OK = 'OK';
     public const FAILED = 'FAILED';
-    public const APPROVED = 'PAYED';
+    public const APPROVED = 'APPROVED';
     public const REJECTED = 'REJECTED';
     public const PENDING = 'PENDING';
     public const UNAUTHORIZED = 'UNAUTHORIZED';

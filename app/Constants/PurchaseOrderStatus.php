@@ -4,8 +4,8 @@ namespace App\Constants;
 
 class PurchaseOrderStatus
 {
-    public const CREATED = 'created';
-    public const PAYED = 'payed';
-    public const REJECTED = 'rejected';
+    public const CREATED = 'CREATED';
+    public const PAYED = 'PAYED';
+    public const REJECTED = 'REJECTED';
 
 }

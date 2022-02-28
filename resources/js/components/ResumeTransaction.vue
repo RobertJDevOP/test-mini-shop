@@ -61,13 +61,14 @@ export default {
     mounted() {
         window.addEventListener('event-when-client-return-ecommerce', (event) => {
 
-            axios.post('api/v1/paymentStatus/', {
-                    params : {
-                        idPurchaseOrder  : this.$store.state.product.,
-                    }
+            axios.get('payment/'+this.$store.state.purchaseOrderId, {
             }).then((response) => {
-
             })
+            axios.get('/api/v1/purchases')
+                .then((response) => {
+                    this.$store.commit('setPurchases',response.data)
+                    setPurchases
+                }).catch((error) => console.error(error))
 
             this.statusTransaction = event.detail.statusTransaction;
             this.messageTransaction = event.detail.messageTransaction;

@@ -162,6 +162,8 @@ export default {
                     }
                 },
             ).then((response) => {
+                console.log( response.data.purchaseOrderId)
+                this.$store.commit('setPurchaseOrderId', response.data.purchaseOrderId)
                P.init(response.data.processUrl, { opacity: 0.4 });
                P.on('response', function(data) {
                    localStorage.setItem('statusTransaction',  data.status.status);
