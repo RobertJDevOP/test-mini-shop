@@ -18,7 +18,7 @@ class PlacetopayResponse
 
     public function getResponse(): array
     {
-        $statusCode = ($this->body['status'])?$this->body['status']['status'] : $statusCode = 500;
+        $statusCode = (array_key_exists('status',$this->body))?$this->body['status']['status'] : 500;
 
         return match ($statusCode) {
         PlacetopayStatusResponses::OK => PlacetopayJsonResponses::transactionRecordOK($this->body,$this->purchaseOrderId),

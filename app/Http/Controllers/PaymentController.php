@@ -15,6 +15,7 @@ class PaymentController extends Controller
         $obj = new PlacetopayWebCheckout($purchaseOrder,null);
         $response = $obj->createRequest();
 
+        dd($response);
         return response()->json($response);
     }
 

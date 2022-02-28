@@ -12,8 +12,8 @@ class CustomerDocumentType implements Arrayable
     public const NIT = 'NIT';
     public const RUT = 'RUT';
     public const DESC_CC = 'Cédula de ciudadanía';
-    public const DESC_TI = 'Cédula de extranjería';
-    public const DESC_CE = 'Tarjeta de identidad';
+    public const DESC_TI = 'Tarjeta de identidad';
+    public const DESC_CE = 'Cédula de extranjería';
     public const DESC_NIT = 'Número de Identificación';
     public const DESC_RUT = 'Registro único tributario';
 
