@@ -13,7 +13,7 @@ use Illuminate\Testing\Fluent\AssertableJson;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
-class Index extends TestCase
+class IndexTest extends TestCase
 {
     use RefreshDatabase;
 

@@ -55,7 +55,7 @@ __webpack_require__.r(__webpack_exports__);
     continuePayment: function continuePayment(purchaseOrderId) {
       this.$store.commit('setPurchaseOrderId', purchaseOrderId);
       axios.get('continuePayment/' + purchaseOrderId).then(function (response) {
-        P.init(response.data, {
+        P.init(response.data.processUrl, {
           opacity: 0.4
         });
         P.on('response', function (data) {

@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\PaymentGateways;
 
-use App\Entities\Product;
+use App\Constants\PlacetopayStatusResponses;
 use App\Models\Customer;
 use App\Models\PurchaseOrder;
 use App\Models\PurchaseOrderDetail;
@@ -45,7 +45,7 @@ class PlacetopayWebcheckoutTest extends TestCase
 
     public function test_it_get_request_is_aprroved(): void
     {
-        $placeToPayResponse = $this->placetopayResponse('APPROVED');
+        $placeToPayResponse = $this->placetopayResponse(PlacetopayStatusResponses::APPROVED);
         $purchaseOrder = $this->createPurchaseOrder();
         Http::fake([
             'https://checkout-co.placetopay.dev/api/session/123123' => Http::response($placeToPayResponse,200)
@@ -59,7 +59,7 @@ class PlacetopayWebcheckoutTest extends TestCase
 
     public function test_it_get_request_is_rejected(): void
     {
-        $placeToPayResponse = $this->placetopayResponse('REJECTED');
+        $placeToPayResponse = $this->placetopayResponse(PlacetopayStatusResponses::REJECTED);
         $purchaseOrder = $this->createPurchaseOrder();
         Http::fake([
             'https://checkout-co.placetopay.dev/api/session/123123' => Http::response($placeToPayResponse,200)
@@ -80,7 +80,7 @@ class PlacetopayWebcheckoutTest extends TestCase
             ->create();
     }
 
-    public function placetopayResponse(string $status = 'OK'): array
+    public function placetopayResponse(string $status = PlacetopayStatusResponses::OK): array
     {
         return [
             'status' => [

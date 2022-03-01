@@ -103,7 +103,6 @@ export default {
             this.$store.commit('setPurchaseOrderId',purchaseOrderId);
             axios.get('checkout/'+purchaseOrderId)
                 .then((response) => {
-                    console.log(response.data);
                     P.init(response.data.processUrl, { opacity: 0.4 });
                     P.on('response', function(data) {
                         localStorage.setItem('statusTransaction',  data.status.status);
@@ -122,7 +121,7 @@ export default {
             this.$store.commit('setPurchaseOrderId',purchaseOrderId);
             axios.get('continuePayment/'+purchaseOrderId)
                 .then((response) => {
-                    P.init(response.data, { opacity: 0.4 });
+                    P.init(response.data.processUrl, { opacity: 0.4 });
                     P.on('response', function(data) {
                         localStorage.setItem('statusTransaction',  data.status.status);
                         localStorage.setItem('messageTransaction',  data.status.message);
