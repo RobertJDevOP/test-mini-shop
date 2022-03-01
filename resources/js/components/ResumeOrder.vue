@@ -123,18 +123,20 @@
             </div>
         </section>
 
+
+
     </div>
 </template>
 
 <script>
 
 export default {
-
     data() {
         return {
             loaderActive: false,
             buttonPayDisabled:false,
             buttonBackDisabled:false,
+            messageFailed: '',
         }
     },
     methods:{
@@ -153,24 +155,31 @@ export default {
                     }
                 },
             ).then((response) => {
-                this.$store.commit('setPurchaseOrderId', response.data.purchaseOrderId);
+                if(500===response.data.status.status){
+                    window.dispatchEvent(new CustomEvent('event-when-wallet-failed',{
+                        detail: {
+                            messageBadRequest: response.data.status.message,
+                        }
+                    }));
+                }else{
+                    this.$store.commit('setPurchaseOrderId', response.data.purchaseOrderId);
+                    P.init(response.data.processUrl, { opacity: 0.4 });
+                    P.on('response', function(data) {
+                        localStorage.setItem('statusTransaction',  data.status.status);
+                        localStorage.setItem('messageTransaction',  data.status.message);
 
-               P.init(response.data.processUrl, { opacity: 0.4 });
-               P.on('response', function(data) {
-                   localStorage.setItem('statusTransaction',  data.status.status);
-                   localStorage.setItem('messageTransaction',  data.status.message);
-
-                   window.dispatchEvent(new CustomEvent('event-when-client-return-ecommerce', {
-                       detail: {
-                           statusTransaction: localStorage.getItem('statusTransaction'),
-                           messageTransaction: localStorage.getItem('messageTransaction')
-                       }
-                   }));
-               })
+                        window.dispatchEvent(new CustomEvent('event-when-client-return-ecommerce', {
+                            detail: {
+                                statusTransaction: localStorage.getItem('statusTransaction'),
+                                messageTransaction: localStorage.getItem('messageTransaction')
+                            }
+                        }));
+                    })
+                }
             })
             .catch((error) => console.error(error))
-            this.$store.dispatch('startStepFourBuy',true)
-            this.$store.dispatch('startStepThreeBuy',false)
+                    this.$store.dispatch('startStepFourBuy',true)
+                    this.$store.dispatch('startStepThreeBuy',false)
         }
     },
     computed:{

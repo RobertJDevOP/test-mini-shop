@@ -22,8 +22,8 @@ class PlacetopayResponse
 
         return match ($statusCode) {
         PlacetopayStatusResponses::OK, PlacetopayStatusResponses::PENDING,
-        PlacetopayStatusResponses::REJECTED, PlacetopayStatusResponses::APPROVED,
-        PlacetopayStatusResponses::FAILED => PlacetopayJsonResponses::transactionRecordOK($this->body,$this->purchaseOrderId),
+        PlacetopayStatusResponses::REJECTED, PlacetopayStatusResponses::APPROVED, => PlacetopayJsonResponses::transactionRecordOK($this->body,$this->purchaseOrderId),
+        PlacetopayStatusResponses::FAILED =>  'RETURN CREDENCIALES INCORRECTAS...'
         };
     }
 }

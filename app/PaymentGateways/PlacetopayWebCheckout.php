@@ -8,26 +8,33 @@ use App\PaymentGateways\Responses\PlacetopayResponse;
 use Carbon\Carbon;
 use DateTimeZone;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class PlacetopayWebCheckout implements IGatewayApiWallet
 {
     private ?string $requestId;
     private PurchaseOrder|int $purchaseOrder;
+    private array $messageError;
 
     public function __construct(PurchaseOrder|int $purchaseOrder,?string $requestId)
     {
         $this->requestId = $requestId;
         $this->purchaseOrder = $purchaseOrder;
+        $this->messageError = ['status' => ['message' => 'Ocurrio un error inesperado con la pasarela de pagos , por favor contactar a sistemas','status' => 500]];
     }
 
     public function createRequest(): array
     {
         $request = $this->makeRequest();
         $response = Http::post(config('app.placetopay_uri').'/api/session', $request);
-        $placetoPayResponse = new PlacetopayResponse(json_decode($response->body(),true),$this->purchaseOrder->id);
 
-        return $placetoPayResponse->getResponse();
+        if($response->failed()){
+            return $this->messageError;
+        }else{
+            $placetoPayResponse = new PlacetopayResponse(json_decode($response->body(),true),$this->purchaseOrder->id);
+            return $placetoPayResponse->getResponse();
+        }
     }
 
     public function getRequestInformation(): array
