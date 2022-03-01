@@ -8,7 +8,6 @@ use App\PaymentGateways\Responses\PlacetopayResponse;
 use Carbon\Carbon;
 use DateTimeZone;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 
 class PlacetopayWebCheckout implements IGatewayApiWallet
@@ -65,7 +64,7 @@ class PlacetopayWebCheckout implements IGatewayApiWallet
             ],
         ];
     }
-
+    //Clase abstracta maybe.....
     public function makePayment(): array
     {
         $product = new Product();

@@ -18,7 +18,7 @@ class PaymentController extends Controller
         return response()->json($response);
     }
 
-    public function getRequestInformation(int $purchaseOrderId)
+    public function getRequestInformation(int $purchaseOrderId): JsonResponse
     {
         $purchasePaymentStatus=PurchasePayment::select('requestId')->where('id_purchase_order', $purchaseOrderId)
             ->latest('id_purchase_payment')->first();

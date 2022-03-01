@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Actions\Api\GeneratePurchaseOrder\Store;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\PurchaseOrderPostRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 
