@@ -10,8 +10,6 @@ use App\PaymentGateways\PlacetopayWebCheckout;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Testing\Fluent\AssertableJson;
-use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
 class PlacetopayWebcheckoutTest extends TestCase
@@ -45,23 +43,32 @@ class PlacetopayWebcheckoutTest extends TestCase
         $this->assertEquals($placeToPayResponse['requestId'], $response['requestId']);
     }
 
-    public function test_it_can_continue_payment(): void
+    public function test_it_get_request_is_aprroved(): void
     {
-        $placeToPayResponse = $this->placetopayResponse();
+        $placeToPayResponse = $this->placetopayResponse('APPROVED');
         $purchaseOrder = $this->createPurchaseOrder();
         Http::fake([
             'https://checkout-co.placetopay.dev/api/session/123123' => Http::response($placeToPayResponse,200)
         ]);
         $paymentWallet = new PlacetopayWebCheckout($purchaseOrder->id,$placeToPayResponse['requestId']);
-        $paymentWallet->getRequestInformation();
 
-        $response = $this->getJson('/continuePayment/'.$purchaseOrder->id);
+        $response= $paymentWallet->getRequestInformation();
 
-        $response->assertStatus(Response::HTTP_OK);
-        $response
-            ->assertJson(fn (AssertableJson $json) =>
-            $json->where('processUrl', $placeToPayResponse['processUrl'])
-            );
+        $this->assertEquals($placeToPayResponse['requestId'], $response['requestId']);
+    }
+
+    public function test_it_get_request_is_rejected(): void
+    {
+        $placeToPayResponse = $this->placetopayResponse('REJECTED');
+        $purchaseOrder = $this->createPurchaseOrder();
+        Http::fake([
+            'https://checkout-co.placetopay.dev/api/session/123123' => Http::response($placeToPayResponse,200)
+        ]);
+        $paymentWallet = new PlacetopayWebCheckout($purchaseOrder->id,$placeToPayResponse['requestId']);
+
+        $response= $paymentWallet->getRequestInformation();
+
+        $this->assertEquals($placeToPayResponse['requestId'], $response['requestId']);
     }
 
     public function createPurchaseOrder(): Model
@@ -73,11 +80,11 @@ class PlacetopayWebcheckoutTest extends TestCase
             ->create();
     }
 
-    public function placetopayResponse(): array
+    public function placetopayResponse(string $status = 'OK'): array
     {
         return [
             'status' => [
-                'status'=> 'OK',
+                'status'=>  $status,
                 'reason'=> 'PC',
                 'message'=> 'La petición se ha procesado correctamente',
                 'date'=> '2021-11-30T15:08:27-05:00',

@@ -13,6 +13,4 @@ class PlacetopayStatusResponses
     public const REFUNDED = 'REFUNDED';
     public const ERROR = 'ERROR';
     public const CREATED = 'CREATED';
-
-
 }

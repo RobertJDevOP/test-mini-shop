@@ -13,27 +13,4 @@ class PlacetopayJsonResponses
 
         return $response;
     }
-
-    public static function transactionRecordFailed(array $response): array
-    {
-        //Store::execute($response,$purchaseOrderId);
-
-        return $response;
-    }
-
-    public static function transactionRecordApproved(array $response,int $purchaseOrderId): array
-    {
-       Store::execute($response,$purchaseOrderId);
-
-       return $response;
-    }
-
-    public static function transactionRecordRejected(array $response,int $purchaseOrderId): array
-    {
-        Store::execute($response,$purchaseOrderId);
-
-        return $response;
-    }
-
-
 }

@@ -1,3 +1,4 @@
+<?php //xdebug_info(); ?>
 @extends('shop')
 @push('main')
     <Shop></Shop>

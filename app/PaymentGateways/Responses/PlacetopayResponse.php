@@ -21,10 +21,9 @@ class PlacetopayResponse
         $statusCode = (array_key_exists('status',$this->body))?$this->body['status']['status'] : 500;
 
         return match ($statusCode) {
-        PlacetopayStatusResponses::OK => PlacetopayJsonResponses::transactionRecordOK($this->body,$this->purchaseOrderId),
-        PlacetopayStatusResponses::FAILED => PlacetopayJsonResponses::transactionRecordFailed($this->body),
-        PlacetopayStatusResponses::APPROVED => PlacetopayJsonResponses::transactionRecordApproved($this->body,$this->purchaseOrderId),
-        PlacetopayStatusResponses::REJECTED => PlacetopayJsonResponses::transactionRecordRejected($this->body,$this->purchaseOrderId),
+        PlacetopayStatusResponses::OK, PlacetopayStatusResponses::PENDING,
+        PlacetopayStatusResponses::REJECTED, PlacetopayStatusResponses::APPROVED,
+        PlacetopayStatusResponses::FAILED => PlacetopayJsonResponses::transactionRecordOK($this->body,$this->purchaseOrderId),
         };
     }
 }
