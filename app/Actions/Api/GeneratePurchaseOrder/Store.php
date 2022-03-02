@@ -14,29 +14,28 @@ class Store
 {
     public static function execute(Request $request): Model
     {
-        $requestCustomer = $request['params'];
         $product = new Product();
 
         $customer = new Customer();
-        $customer->document_number = $requestCustomer['customer']['customerDocumentNumber'];
-        $customer->address = $requestCustomer['customer']['customerStreet'];
-        $customer->document_type_id = $requestCustomer['customer']['customerDocumentType'];
+        $customer->document_number = $request['customerDocumentNumber'];
+        $customer->address = $request['customerStreet'];
+        $customer->document_type_id = $request['customerDocumentType'];
         $customer->save();
 
         $order= new PurchaseOrder();
-        $order->customer_name = $requestCustomer['customer']['customerName'];
-        $order->customer_email = $requestCustomer['customer']['customerEmail'];
-        $order->customer_mobile = $requestCustomer['customer']['customerPhone'];
+        $order->customer_name = $request['customerName'];
+        $order->customer_email = $request['customerEmail'];
+        $order->customer_mobile = $request['customerPhone'];
         $order->status = PurchaseOrderStatus::CREATED;
         $order->customer_id = $customer->id;
-        $order->qty = $requestCustomer['qtyProduct'];
-        $order->total = $product->getPrice()*$requestCustomer['qtyProduct'];
+        $order->qty = $request['qtyProduct'];
+        $order->total = $product->getPrice()*$request['qtyProduct'];
         $order->save();
 
         $detailOrder= new PurchaseOrderDetail();
         $detailOrder->purchase_order_id=$order->id;
         $detailOrder->product_id=$product->getReference();
-        $detailOrder->qty=$requestCustomer['qtyProduct'];
+        $detailOrder->qty=$request['qtyProduct'];
         $detailOrder->price=$product->getPrice();
         $detailOrder->save();
 

@@ -28,7 +28,7 @@
                                                         <p class="subtitle is-5">{{getProduct.description}}</p>
                                                     </div>
                                                 </div>
-                                 
+
                                                 <div class="content">
                                                     <div class="columns">
                                                         <div class="column">
@@ -146,13 +146,17 @@ export default {
             this.buttonDisabled = true
             this.$store.commit('setHideLoader',true)
             this.$store.dispatch('enabledButtonBuyResumeOrder',true)
-            axios.post('api/v1/createOrder', {
-                    params : {
-                        customer  : this.$store.state.customer,
-                        qtyProduct: this.$store.state.qtyProduct,
-                        product: this.$store.state.product,
-                    }
-                },
+
+            let bodyFormData = new FormData();
+            bodyFormData.append('customerDocumentNumber', this.$store.state.customer.customerDocumentNumber);
+            bodyFormData.append('customerStreet', this.$store.state.customer.customerStreet);
+            bodyFormData.append('customerDocumentType', this.$store.state.customer.customerDocumentType);
+            bodyFormData.append('customerName', this.$store.state.customer.customerName);
+            bodyFormData.append('customerEmail', this.$store.state.customerEmail);
+            bodyFormData.append('customerPhone', this.$store.state.customerPhone);
+            bodyFormData.append('qtyProduct', this.$store.state.qtyProduct);
+
+            axios.post('api/v1/createOrder',bodyFormData,
             ).then((response) => {
                 if(500===response.data.status.status){
                     window.dispatchEvent(new CustomEvent('event-when-wallet-failed',{
@@ -176,7 +180,9 @@ export default {
                     })
                 }
             })
-            .catch((error) => console.error(error))
+            .catch((error) =>
+                alert('Ocurrio un error en la validacion del formulario')
+            )
         }
     },
     computed:{

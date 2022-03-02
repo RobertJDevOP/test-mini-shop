@@ -5,12 +5,11 @@ namespace App\Http\Controllers\Api;
 use App\Actions\Api\GeneratePurchaseOrder\Store;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PurchaseOrderPostRequest;
-use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
 
 class GeneratePurchaseOrderController extends Controller
 {
-    public function store(Request $request,Store $storeAction): RedirectResponse
+    public function store(PurchaseOrderPostRequest $request,Store $storeAction): RedirectResponse
     {
         $orderGenerate = $storeAction::execute($request);
 

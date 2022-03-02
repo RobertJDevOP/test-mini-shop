@@ -15,9 +15,14 @@ class PurchaseOrderPostRequest extends FormRequest
 
     public function rules(): array
     {
-        $customer = $this->request->all()['params']['customer'];
         return [
-            $customer['customerDocumentNumber'] => ['bail','required', 'numeric', 'min:5|max:10'],
+            'customerDocumentNumber' => ['required', 'numeric'],
+            'customerStreet' => ['required', 'string'],
+            'customerDocumentType' => ['required', 'numeric','exists:document_types,id'],
+            'customerName' => ['required', 'string'],
+            'customerEmail' => ['required', 'string'],
+            'customerPhone' => ['required', 'numeric'],
+            'qtyProduct' => ['required', 'numeric'],
         ];
     }
 }

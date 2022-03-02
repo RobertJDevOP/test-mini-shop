@@ -14,6 +14,7 @@ class StoreTest extends TestCase
     {
         $response = $this->post('api/v1/createOrder/' , $this->makePurchaseOrder());
 
+        $response->assertSessionHasNoErrors();
         $this->followRedirects($response)
             ->assertStatus(200)
             ->assertJsonStructure([
@@ -28,17 +29,13 @@ class StoreTest extends TestCase
         $documentType = DocumentType::factory()->create();
 
         return [
-            'params' =>  [
-                'customer' => [
-                    'customerDocumentNumber' => 1095838453,
-                    'customerStreet' => 'FLORIDABLANCA SANTANDER',
-                    'customerDocumentType' => $documentType->id,
-                    'customerName' => 'ROBERTO JIMENEZ',
-                    'customerEmail' => 'rcjimenetest@gmail.com',
-                    'customerPhone' => '3119292992',
-                ],
+                'customerDocumentNumber' => 1234567890,
+                'customerStreet' => 'FLORIDABLANCA SANTANDER',
+                'customerDocumentType' => $documentType->id,
+                'customerName' => 'ROBERTO JIMENEZ',
+                'customerEmail' => 'rcjimenetest@gmail.com',
+                'customerPhone' => '3119292992',
                 'qtyProduct' => 1
-            ]
         ];
     }
 }

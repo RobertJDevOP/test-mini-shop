@@ -32,6 +32,9 @@
                                     <div v-if="purchase.status === 'PAYED'">
                                         Pagada
                                     </div>
+                                    <div v-if="purchase.status === 'REJECTED'">
+                                        Rechazada
+                                    </div>
                                 </td>
                                 <td>
                                   {{moment(purchase.created_at).subtract(10, 'days').calendar()}}
