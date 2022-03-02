@@ -43,7 +43,7 @@
                 </div>
             </div>
         </section>
-
+        <Spinnerwaitpayment :active="getHideLoader" message="" ></Spinnerwaitpayment>
 
         <vue-final-modal
             v-model="showModal"
@@ -100,6 +100,7 @@ export default {
             this.showModal = true
         },
         retryPayment(purchaseOrderId){
+            this.$store.commit('setHideLoader',true)
             this.$store.commit('setPurchaseOrderId',purchaseOrderId);
             axios.get('checkout/'+purchaseOrderId)
                 .then((response) => {
@@ -107,7 +108,6 @@ export default {
                     P.on('response', function(data) {
                         localStorage.setItem('statusTransaction',  data.status.status);
                         localStorage.setItem('messageTransaction',  data.status.message);
-
                         window.dispatchEvent(new CustomEvent('event-when-client-return-ecommerce-retry-payment', {
                             detail: {
                                 statusTransaction: localStorage.getItem('statusTransaction'),
@@ -118,6 +118,7 @@ export default {
                 }).catch((error) => console.error(error))
         },
         continuePayment(purchaseOrderId){
+            this.$store.commit('setHideLoader',true)
             this.$store.commit('setPurchaseOrderId',purchaseOrderId);
             axios.get('continuePayment/'+purchaseOrderId)
                 .then((response) => {
@@ -146,6 +147,9 @@ export default {
 
     },
     computed:{
+        getHideLoader(){
+            return this.$store.state.loaderWallet;
+        },
         getStatusComponent(){
             return this.$store.state.isShowingPurchaseOrderHistory;
         },

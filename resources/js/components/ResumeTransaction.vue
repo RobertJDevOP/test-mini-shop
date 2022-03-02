@@ -32,8 +32,8 @@
                                             <div class="content">
                                                 <div class="columns" >
                                                     <div class="column">
-                                                        <h3 class="title is-4">Estado de la transaccion: {{statusTransaction}} </h3><br>
-                                                        <h3 class="title is-4">Mensaje:  {{messageTransaction}}   </h3>
+                                                        <h3 class="title is-4">Estado de la transaccion: {{statusTransaction}} </h3>
+                                                        <h3 class="title is-4"> {{messageTransaction}}   </h3>
                                                     </div>
                                                 </div>
                                                 <div class="columns">
@@ -54,7 +54,6 @@
                     </div>
                 </div>
             </div>
-            <Spinnerwaitpayment :active="loaderActive" message="" ></Spinnerwaitpayment>
         </section>
 
 
@@ -72,7 +71,6 @@ export default {
         return {
             statusTransaction : null,
             messageTransaction : '',
-            loaderActive: false,
             showingCardContent : false,
             showModal : false,
             messageFailed : ''
@@ -87,23 +85,21 @@ export default {
             this.$store.dispatch('startStepFourBuy',false)
             this.$store.dispatch('startPurchaseOrderHistory',true)
         },
-        showLoader () {
-            this.loaderActive = true;
-        },
-        hideLoader () {
-            this.loaderActive = false;
-        },
+
     },
     mounted() {
-        this.showLoader();
         window.addEventListener('event-when-wallet-failed', (event) => {
-                this.messageFailed=event.detail.messageBadRequest
-                this.hideLoader();
-                this.showModal = true
+            this.messageFailed=event.detail.messageBadRequest
+            this.$store.commit('setHideLoader',false)
+            this.showModal = true
+            this.$store.dispatch('enabledButtonBuyResumeOrder',false)
+            window.dispatchEvent(new CustomEvent('event-when-purchase-has-finished', {
+            }));
+
         });
         window.addEventListener('event-when-client-return-ecommerce', (event) => {
             axios.get('payment/'+this.$store.state.purchaseOrderId, {})
-            .then((response) => {
+            .then(() => {
             })
             axios.get('/api/v1/purchases')
                 .then((response) => {
@@ -112,8 +108,14 @@ export default {
 
             this.statusTransaction = event.detail.statusTransaction;
             this.messageTransaction = event.detail.messageTransaction;
-            this.hideLoader()
+            this.$store.dispatch('enabledButtonBuyResumeOrder',false)
+            this.$store.commit('setHideLoader',false)
             this.showingCardContent = true;
+            window.dispatchEvent(new CustomEvent('event-when-purchase-has-finished', {
+            }));
+            this.$store.dispatch('startStepFourBuy',true)
+            this.$store.dispatch('startPurchaseOrderHistory',false)
+            this.$store.dispatch('startStepThreeBuy',false)
         });
         window.addEventListener('event-when-client-return-ecommerce-retry-payment', (event) => {
             axios.get('/api/v1/purchases')
@@ -123,7 +125,11 @@ export default {
 
             this.statusTransaction = event.detail.statusTransaction;
             this.messageTransaction = event.detail.messageTransaction;
-            this.hideLoader()
+            this.$store.dispatch('enabledButtonBuyResumeOrder',false)
+            this.$store.dispatch('startPurchaseOrderHistory',false)
+            this.$store.commit('setHideLoader',false)
+            window.dispatchEvent(new CustomEvent('event-when-purchase-has-finished', {
+            }));
         });
     },
     computed:{

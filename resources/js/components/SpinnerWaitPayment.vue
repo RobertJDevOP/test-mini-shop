@@ -6,7 +6,6 @@
             <div></div>
             <div></div>
         </div>
-        <p>{{ text }} Procesando pago.... </p>
     </div>
 </template>
 <script>

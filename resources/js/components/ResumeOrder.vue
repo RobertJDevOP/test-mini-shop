@@ -109,12 +109,12 @@
                         <div class="columns" id="BottomDiv">
                             <div class="column">
                                 <div class="buttons has-addons">
-                                    <button  @click="stepTwoBuy" :disabled="buttonBackDisabled"  class="button is-warning is-fullwidth">Anterior</button>
+                                    <button  @click="stepTwoBuy" :disabled="buttonDisabled"  class="button is-warning is-fullwidth">Anterior</button>
                                 </div>
                             </div>
                             <div class="column">
                                 <div class="buttons has-addons">
-                                    <button  @click="walletPayment" :disabled="isDisabledButton" class="button is-primary is-fullwidth">Ir a pagar</button>
+                                    <button  @click="walletPayment" :disabled="buttonDisabled" class="button is-primary is-fullwidth">Ir a pagar</button>
                                 </div>
                             </div>
                         </div>
@@ -123,7 +123,7 @@
             </div>
         </section>
 
-
+        <Spinnerwaitpayment :active="getHideLoader" message="" ></Spinnerwaitpayment>
 
     </div>
 </template>
@@ -133,10 +133,8 @@
 export default {
     data() {
         return {
-            loaderActive: false,
-            buttonPayDisabled:false,
-            buttonBackDisabled:false,
             messageFailed: '',
+            buttonDisabled : false
         }
     },
     methods:{
@@ -145,8 +143,9 @@ export default {
             this.$store.dispatch('startStepThreeBuy',false)
         },
         walletPayment(){
-            this.buttonPayDisabled=true
-            this.buttonBackDisabled=true
+            this.buttonDisabled = true
+            this.$store.commit('setHideLoader',true)
+            this.$store.dispatch('enabledButtonBuyResumeOrder',true)
             axios.post('api/v1/createOrder', {
                     params : {
                         customer  : this.$store.state.customer,
@@ -178,13 +177,11 @@ export default {
                 }
             })
             .catch((error) => console.error(error))
-                    this.$store.dispatch('startStepFourBuy',true)
-                    this.$store.dispatch('startStepThreeBuy',false)
         }
     },
     computed:{
-        isDisabledButton() {
-            return this.buttonPayDisabled;
+        getHideLoader(){
+            return this.$store.state.loaderWallet;
         },
         getStatusComponent(){
             return this.$store.state.isShowingResumeOrder;
@@ -212,9 +209,14 @@ export default {
         },
         getProduct() {
             return this.$store.state.product;
-        }
+        },
     },
-
+    mounted() {
+        window.addEventListener('event-when-purchase-has-finished', () => {
+            console.log('Evento ejecutado purchase finished..')
+            this.buttonDisabled = this.$store.state.buttonPayOrderResume;
+        });
+    }
 }
 </script>
 
