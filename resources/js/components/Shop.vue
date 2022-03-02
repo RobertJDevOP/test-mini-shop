@@ -32,7 +32,7 @@
                                             <div class="content">
                                                 <div class="columns">
                                                     <div class="column">
-                                                        <h3 class="title is-4">Precio: ${{getProduct.price}} </h3>
+                                                        <h3 class="title is-4">Precio: ${{Number(getProduct.price).toLocaleString()}} </h3>
                                                     </div>
                                                     <div class="column">
                                                         <h3 class="title is-4">Cantidad: <input :value="getPrdouctQty"  @change="setIncrementQtyProduct" class="input" size="3" type="number" style="width: 30%;height: 30px;"> </h3>

@@ -28,13 +28,13 @@
                                                         <p class="subtitle is-5">{{getProduct.description}}</p>
                                                     </div>
                                                 </div>
-
+                                 
                                                 <div class="content">
                                                     <div class="columns">
                                                         <div class="column">
-                                                            <p class="title is-5">Precio: ${{getProduct.price}} </p>
+                                                            <p class="title is-5">Precio: $  {{Number(getProduct.price).toLocaleString()}} </p>
                                                             <p class="title is-5">Cantidad: {{getProductQty}} </p>
-                                                            <p class="title is-5">Total a pagar: {{getProductQty*16199000}} </p>
+                                                            <p class="title is-5">Total a pagar:   {{Number(getProduct.price*getProductQty).toLocaleString()}} </p>
                                                         </div>
                                                     </div>
                                                 </div>

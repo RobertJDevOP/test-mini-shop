@@ -24,15 +24,24 @@
                             <tr v-for="(purchase,index) in getPurchases" :key="purchase.id" >
                                 <td>{{purchase.id}}</td>
                                 <td>{{purchase.qty}}</td>
-                                <td>{{purchase.total}}</td>
-                                <td>{{purchase.status}}</td>
-                                <td>{{purchase.created_at}}</td>
+                                <td>{{Number(purchase.total).toLocaleString()}}</td>
+                                <td>
+                                    <div v-if="purchase.status === 'CREATED' || purchase.status === 'PENDING'">
+                                        Pendiente
+                                    </div>
+                                    <div v-if="purchase.status === 'PAYED'">
+                                        Pagada
+                                    </div>
+                                </td>
+                                <td>
+                                  {{moment(purchase.created_at).subtract(10, 'days').calendar()}}
+                               </td>
                                 <td>
                                     <button  @click="viewDetail(purchase)" class="button is-primary is-small">Ver detalle</button>
                                     <div v-if="purchase.status === 'REJECTED'">
                                         <button  @click="retryPayment(purchase.id)"  class="button is-warning is-small">Re intentar pago</button>
                                     </div>
-                                    <div v-if="purchase.status === 'CREATED'">
+                                    <div v-if="purchase.status === 'CREATED' || purchase.status === 'PENDING'">
                                         <button  @click="continuePayment(purchase.id)"  class="button is-warning is-small">Continuar con el pago</button>
                                     </div>
                                 </td>
@@ -79,6 +88,7 @@
 
 <script>
 import { VueFinalModal } from "vue-final-modal";
+import moment from 'moment';
 
 export default {
     components: {
@@ -138,6 +148,7 @@ export default {
         },
     },
     beforeCreate() {
+        this.moment = moment;
         axios.get('/api/v1/purchases')
             .then((response) => {
                 this.$store.commit('setPurchases',response.data)
