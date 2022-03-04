@@ -156,6 +156,7 @@ export default {
             bodyFormData.append('customerPhone', this.$store.state.customerPhone);
             bodyFormData.append('qtyProduct', this.$store.state.qtyProduct);
 
+
             axios.post('api/v1/createOrder',bodyFormData,
             ).then((response) => {
                 if(500===response.data.status.status){

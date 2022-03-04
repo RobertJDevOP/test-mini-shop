@@ -25,7 +25,7 @@ class PurchaseOrder extends Model
 
     public function detailsOrder(): HasMany
     {
-        return $this->hasMany(PurchaseOrderDetail::class);
+        return $this->hasMany(PurchaseOrderDetail::class,'purchase_order_id', 'id');
     }
 
     public  function  purchasePaymentsStatus(): HasMany

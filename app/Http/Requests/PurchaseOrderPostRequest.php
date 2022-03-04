@@ -6,8 +6,6 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class PurchaseOrderPostRequest extends FormRequest
 {
-    protected $stopOnFirstFailure = true;
-
     public function authorize(): bool
     {
         return true;
@@ -16,13 +14,11 @@ class PurchaseOrderPostRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'customerDocumentNumber' => ['required', 'numeric'],
-            'customerStreet' => ['required', 'string'],
-            'customerDocumentType' => ['required', 'numeric','exists:document_types,id'],
-            'customerName' => ['required', 'string'],
-            'customerEmail' => ['required', 'string'],
-            'customerPhone' => ['required', 'numeric'],
-            'qtyProduct' => ['required', 'numeric'],
+            'customerDocumentNumber' => ['bail','required', 'numeric','digits_between:5,10'],
+            'customerStreet' => ['bail','required', 'string','max:255'],
+            'customerDocumentType' => ['bail','required', 'integer','exists:document_types,id'],
+            'customerName' => ['bail','required', 'string','max:80'],
+            'qtyProduct' => ['bail','required', 'integer','digits_between:1,5'],
         ];
     }
 }
