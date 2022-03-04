@@ -14,11 +14,12 @@ class Store
 {
     public static function execute(Request $request): Model
     {
+        dd($request);
         $product = new Product();
 
         $customer = new Customer();
         $customer->document_number = $request['customerDocumentNumber'];
-        $customer->address = $request['customerStreet'];
+        $customer->address = $request['customerAddress'];
         $customer->document_type_id = $request['customerDocumentType'];
         $customer->save();
 

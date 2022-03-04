@@ -9,18 +9,6 @@ import ResumeTransaction from "./components/ResumeTransaction";
 import PurchaseOrderHistory from "./components/PurchaseOrderHistory";
 import  { createStore } from 'vuex';
 
-import Echo from 'laravel-echo'
-
-/*
-window.Pusher = require('pusher-js')
-window.Echo = new Echo({
-    broadcaster: 'pusher',
-    key: process.env.MIX_PUSHER_APP_KEY,
-    wsHost: window.location.hostname,
-    wsPort: 6001,
-    disableStats: true,
-    forceTLS: false,
-})*/
 
 const store = createStore({
     state () {
@@ -38,15 +26,21 @@ const store = createStore({
                 customerDocumentType : [],
                 customerDocumentNumber : '',
                 customerStreet : '',
-                customerDocumentTypeLabel:'',
-                transactionMsg:'',
-                transactionStatus:'',
             },
+            customerDocumentTypeLabel:'',
             qtyProduct:0,
             purchaseOrderId : '',
             purchases : [],
             product: [],
             loaderWallet : false,
+            msg : {
+                errorEmail : '',
+                cellPhone : '',
+                address : '',
+                documentType : '',
+                documentNumber : '',
+                name: '',
+            },
         }
     },
     mutations: {
@@ -60,24 +54,30 @@ const store = createStore({
             state.purchases=value
         },
         setCustomerEmail (state,value) {
+            (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(value)) ? state.msg.errorEmail = '' : state.msg.errorEmail = 'Dirección de email invalida'
             state.customer.customerEmail=value
         },
         setCustomerName (state,value) {
+            (value.length >=5 && value.length <=80) ? state.msg.mame = '' : state.msg.name = 'Nombre ingresado incorrectamente'
             state.customer.customerName=value
         },
         setCustomerPhone (state,value) {
+            (value.length===10 ) ? state.msg.cellPhone = '' : state.msg.cellPhone = 'El número de celular debe contener 10 dígitos'
             state.customer.customerPhone=value
         },
         setCustomerStreet (state,value) {
+            (value.length >= 5  && value.length <=255) ? state.msg.address = '' : state.msg.address = 'La dirección de residencia es incorrecta '
             state.customer.customerStreet=value
         },
         setCustomerDocumentType (state,value) {
+            (value ) ? state.msg.documentType = '' : state.msg.documentType = 'Por favor ingrese una opción'
             state.customer.customerDocumentType=value
         },
         setCustomerDocumentTypeLabel(state,value){
             state.customer.customerDocumentTypeLabel=value
         },
         setCustomerDocumentNumber (state,value) {
+            (value.length >=4 && value.length <= 15 ) ? state.msg.documentNumber = '' : state.msg.documentNumber = 'Número de documento ingresado invalido!'
             state.customer.customerDocumentNumber=value
         },
         SET_PRODUCT(state, posts){

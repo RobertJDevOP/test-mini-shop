@@ -15,9 +15,11 @@ class PurchaseOrderPostRequest extends FormRequest
     {
         return [
             'customerDocumentNumber' => ['bail','required', 'numeric','digits_between:5,10'],
-            'customerStreet' => ['bail','required', 'string','max:255'],
+            'customerAddress' => ['bail','required', 'string','max:255'],
             'customerDocumentType' => ['bail','required', 'integer','exists:document_types,id'],
-            'customerName' => ['bail','required', 'string','max:80'],
+            'customerPhone' => ['bail','required', 'numeric','digits:10'],
+            'customerEmail' => ['bail','required', 'string','email','max:120'],
+            'customerName' => ['bail','required', 'string','max:80'.'min:5'],
             'qtyProduct' => ['bail','required', 'integer','digits_between:1,5'],
         ];
     }

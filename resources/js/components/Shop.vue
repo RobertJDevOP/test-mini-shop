@@ -59,6 +59,7 @@ export default {
     data() {
         return {
             qtyProduct: '',
+            msg: [],
         }
     },
     methods: {
@@ -87,6 +88,8 @@ export default {
     },
     beforeCreate() {
         this.$store.dispatch('getProduct')
+    },
+    watch:{
     }
 
 }

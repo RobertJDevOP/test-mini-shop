@@ -143,19 +143,18 @@ export default {
             this.$store.dispatch('startStepThreeBuy',false)
         },
         walletPayment(){
+            let bodyFormData = new FormData();
+            bodyFormData.append('customerDocumentNumber', this.$store.state.customer.customerDocumentNumber);
+            bodyFormData.append('customerAddress', this.$store.state.customer.customerStreet);
+            bodyFormData.append('customerDocumentType', this.$store.state.customer.customerDocumentType);
+            bodyFormData.append('customerName', this.$store.state.customer.customerName);
+            bodyFormData.append('customerEmail', this.$store.state.customer.customerEmail);
+            bodyFormData.append('customerPhone', this.$store.state.customer.customerPhone);
+            bodyFormData.append('qtyProduct', this.$store.state.qtyProduct);
+
             this.buttonDisabled = true
             this.$store.commit('setHideLoader',true)
             this.$store.dispatch('enabledButtonBuyResumeOrder',true)
-
-            let bodyFormData = new FormData();
-            bodyFormData.append('customerDocumentNumber', this.$store.state.customer.customerDocumentNumber);
-            bodyFormData.append('customerStreet', this.$store.state.customer.customerStreet);
-            bodyFormData.append('customerDocumentType', this.$store.state.customer.customerDocumentType);
-            bodyFormData.append('customerName', this.$store.state.customer.customerName);
-            bodyFormData.append('customerEmail', this.$store.state.customerEmail);
-            bodyFormData.append('customerPhone', this.$store.state.customerPhone);
-            bodyFormData.append('qtyProduct', this.$store.state.qtyProduct);
-
 
             axios.post('api/v1/createOrder',bodyFormData,
             ).then((response) => {
@@ -209,7 +208,7 @@ export default {
             return this.$store.state.customer.customerDocumentNumber;
         },
         getCustomerDocumentType(){
-            return this.$store.state.customer.customerDocumentTypeLabel;
+            return this.$store.state.customerDocumentTypeLabel;
         },
         getProductQty(){
             return this.$store.state.qtyProduct;
