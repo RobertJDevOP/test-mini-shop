@@ -14,7 +14,6 @@ class Store
 {
     public static function execute(Request $request): Model
     {
-        dd($request);
         $product = new Product();
 
         $customer = new Customer();

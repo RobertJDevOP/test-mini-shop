@@ -20,7 +20,7 @@ class PurchaseOrderPostRequest extends FormRequest
             'customerPhone' => ['bail','required', 'numeric','digits:10'],
             'customerEmail' => ['bail','required', 'string','email','max:120'],
             'customerName' => ['bail','required', 'string','max:80'.'min:5'],
-            'qtyProduct' => ['bail','required', 'integer','digits_between:1,5'],
+            'qtyProduct' => ['bail','required', 'integer','between:1,5'],
         ];
     }
 }
