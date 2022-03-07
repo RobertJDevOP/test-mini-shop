@@ -125,16 +125,33 @@
 
         <Spinnerwaitpayment :active="getHideLoader" message="" ></Spinnerwaitpayment>
 
+        <vue-final-modal
+            v-model="showModal"
+            classes="modal-container"
+            content-class="modal-content">
+            <span class="modal__title">La siguiente información debe cumplir con lo requerido</span>
+            <div class="modal__content">
+                    <br>
+                    <div v-for="(value,index) in errorsForm">
+                        {{value}}
+                    </div>
+            </div>
+        </vue-final-modal>
     </div>
 </template>
 
 <script>
-
+import { VueFinalModal } from "vue-final-modal";
 export default {
+    components: {
+        VueFinalModal,
+    },
     data() {
         return {
             messageFailed: '',
-            buttonDisabled : false
+            buttonDisabled : false,
+            showModal: false,
+            errorsForm : []
         }
     },
     methods:{
@@ -181,8 +198,15 @@ export default {
                 }
             })
             .catch((error) =>
-                alert('Ocurrio un error en la validacion del formulario')
+                 this.readingFormErrors(error.response.data.errors)
             )
+        },
+        readingFormErrors(errors){
+            for (const error in errors) {
+                this.errorsForm.push(errors[error][0])
+            }
+            this.buttonDisabled = false
+            this.showModal = true;
         }
     },
     computed:{
@@ -234,5 +258,23 @@ export default {
 }
 #BottomDiv{
     margin-top:150px;
+}
+:deep(.modal-container) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+:deep(.modal-content) {
+    display: flex;
+    flex-direction: column;
+    margin: 0 1rem;
+    padding: 1rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 0.25rem;
+    background: #fff;
+}
+.modal__title {
+    font-size: 1.5rem;
+    font-weight: 700;
 }
 </style>
