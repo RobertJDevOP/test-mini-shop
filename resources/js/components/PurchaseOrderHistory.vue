@@ -6,7 +6,7 @@
             <div class="container">
                 <div class="columns is-centered">
                     <div class="column is-half">
-                       <h3 class="title is-4">Historial de pagos electronicos  </h3>
+                       <h3 class="title is-4">Historial de pagos electronicos </h3>
                         <button  @click="goToStepOne"  class="button is-primary is-small">Volver</button>
                         <br><br>
                         <table class="table">
@@ -26,7 +26,10 @@
                                 <td>{{purchase.attributes.qty}}</td>
                                 <td>{{Number(purchase.attributes.total).toLocaleString()}}</td>
                                 <td>
-                                    <div v-if="purchase.attributes.status === 'CREATED' || purchase.attributes.status === 'PENDING'">
+                                    <div v-if="purchase.attributes.status === 'CREATED'">
+                                        Creada
+                                    </div>
+                                    <div v-if="purchase.attributes.status === 'PENDING'">
                                         Pendiente
                                     </div>
                                     <div v-if="purchase.attributes.status === 'PAYED'">
@@ -42,8 +45,11 @@
                                     <div v-if="purchase.attributes.status === 'REJECTED'">
                                         <button  @click="retryPayment(purchase.attributes.id)"  class="button is-warning is-small">Re intentar pago</button>
                                     </div>
-                                    <div v-if="purchase.attributes.status === 'CREATED' || purchase.attributes.status === 'PENDING'">
+                                    <div v-if="purchase.attributes.status === 'CREATED'">
                                         <button  @click="continuePayment(purchase.attributes.id)"  class="button is-warning is-small">Continuar con el pago</button>
+                                    </div>
+                                    <div v-if="purchase.attributes.status === 'PENDING'">
+                                        El pago esta en espera!
                                     </div>
                                 </td>
                             </tr>
@@ -72,7 +78,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr v-for="(purchaseOrderDetail,index) in purchaseOrderDetail" :key="purchaseOrderDetail.purchase_order_id" >
+                    <tr v-for="(purchaseOrderDetail) in purchaseOrderDetail" :key="purchaseOrderDetail.purchase_order_id" >
                         <td>{{purchaseOrderDetail.purchase_order_id}}</td>
                         <td>{{purchaseOrderDetail.qty}}</td>
                         <td>{{purchaseOrderDetail.price}}</td>
