@@ -127,7 +127,9 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       messageFailed: '',
-      buttonDisabled: false,
+      buttonBuyDisabled: false,
+      buttonPreviousDisabled: false,
+      showModalConexRequest: false,
       showModal: false,
       errorsForm: []
     };
@@ -148,44 +150,74 @@ __webpack_require__.r(__webpack_exports__);
       bodyFormData.append('customerEmail', this.$store.state.customer.customerEmail);
       bodyFormData.append('customerPhone', this.$store.state.customer.customerPhone);
       bodyFormData.append('qtyProduct', this.$store.state.qtyProduct);
-      this.buttonDisabled = true;
+      this.buttonBuyDisabled = true;
+      this.buttonPreviousDisabled = true;
       this.$store.commit('setHideLoader', true);
-      this.$store.dispatch('enabledButtonBuyResumeOrder', true);
-      axios.post('api/v1/createOrder', bodyFormData).then(function (response) {
-        if (500 === response.data.status.status) {
-          window.dispatchEvent(new CustomEvent('event-when-wallet-failed', {
-            detail: {
-              messageBadRequest: response.data.status.message
-            }
-          }));
-        } else {
-          _this.$store.commit('setPurchaseOrderId', response.data.purchaseOrderId);
 
-          P.init(response.data.processUrl, {
-            opacity: 0.4
-          });
-          P.on('response', function (data) {
-            localStorage.setItem('statusTransaction', data.status.status);
-            localStorage.setItem('messageTransaction', data.status.message);
-            window.dispatchEvent(new CustomEvent('event-when-client-return-ecommerce', {
+      try {
+        axios.post('api/v1/createOrder', bodyFormData).then(function (response) {
+          if (500 === response.data.status.status) {
+            window.dispatchEvent(new CustomEvent('event-when-wallet-failed', {
               detail: {
-                statusTransaction: localStorage.getItem('statusTransaction'),
-                messageTransaction: localStorage.getItem('messageTransaction')
+                messageBadRequest: response.data.status.message
               }
             }));
-          });
-        }
-      })["catch"](function (error) {
-        return _this.readingFormErrors(error.response.data.errors);
-      });
+          } else {
+            _this.$store.commit('setPurchaseOrderId', response.data.purchaseOrderId);
+
+            P.init(response.data.processUrl, {
+              opacity: 0.4
+            });
+            P.on('response', function (data) {
+              localStorage.setItem('statusTransaction', data.status.status);
+              localStorage.setItem('messageTransaction', data.status.message);
+              window.dispatchEvent(new CustomEvent('event-when-client-return-ecommerce', {
+                detail: {
+                  statusTransaction: localStorage.getItem('statusTransaction'),
+                  messageTransaction: localStorage.getItem('messageTransaction')
+                }
+              }));
+            });
+          }
+        })["catch"](function (error) {
+          // create base class
+          if (error.response) {
+            if (error.response.status === 422) {
+              _this.readingFormErrors(error.response.data.errors);
+            }
+
+            if (error.response.status === 500) {//Mostrar error pasarela excepctiones por parte del backend
+            } // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            // console.log(error.response.data);
+            // console.log(error.response.status);
+            // console.log(error.response.headers);
+
+          } else if (error.request) {
+            // The request was made but no response was received
+            // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+            // http.ClientRequest in node.js
+            console.log('Ninguna respuesta..' + error.request);
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log('Error de conexion', error.message);
+          }
+        });
+      } catch (error) {
+        console.error(error.response.data);
+      }
     },
     readingFormErrors: function readingFormErrors(errors) {
+      this.errorsForm = [];
+
       for (var error in errors) {
         this.errorsForm.push(errors[error][0]);
       }
 
-      this.buttonDisabled = false;
+      this.buttonBuyDisabled = false;
+      this.buttonPreviousDisabled = false;
       this.showModal = true;
+      this.$store.commit('setHideLoader', false);
     }
   },
   computed: {
@@ -990,6 +1022,22 @@ var _hoisted_63 = /*#__PURE__*/_withScopeId(function () {
   );
 });
 
+var _hoisted_64 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    "class": "modal__title"
+  }, "Ocurrió un error inesperado", -1
+  /* HOISTED */
+  );
+});
+
+var _hoisted_65 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "modal__content"
+  }, null, -1
+  /* HOISTED */
+  );
+});
+
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Spinnerwaitpayment = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Spinnerwaitpayment");
 
@@ -1029,7 +1077,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onClick: _cache[0] || (_cache[0] = function () {
       return $options.stepTwoBuy && $options.stepTwoBuy.apply($options, arguments);
     }),
-    disabled: $data.buttonDisabled,
+    disabled: $data.buttonPreviousDisabled,
     "class": "button is-warning is-fullwidth"
   }, "Anterior", 8
   /* PROPS */
@@ -1037,7 +1085,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onClick: _cache[1] || (_cache[1] = function () {
       return $options.walletPayment && $options.walletPayment.apply($options, arguments);
     }),
-    disabled: $data.buttonDisabled,
+    disabled: $data.buttonBuyDisabled,
     "class": "button is-primary is-fullwidth"
   }, "Ir a pagar", 8
   /* PROPS */
@@ -1062,6 +1110,22 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }), 256
       /* UNKEYED_FRAGMENT */
       ))])];
+    }),
+    _: 1
+    /* STABLE */
+
+  }, 8
+  /* PROPS */
+  , ["modelValue"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_vue_final_modal, {
+    modelValue: $data.showModalConexRequest,
+    "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
+      return $data.showModalConexRequest = $event;
+    }),
+    classes: "modal-container",
+    "content-class": "modal-content"
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [_hoisted_64, _hoisted_65];
     }),
     _: 1
     /* STABLE */
@@ -1781,7 +1845,6 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 var store = (0,vuex__WEBPACK_IMPORTED_MODULE_7__.createStore)({
   state: function state() {
     return {
-      buttonPayOrderResume: false,
       isShowingUserData: false,
       isShowingShop: true,
       isShowingResumeOrder: false,
@@ -1882,12 +1945,8 @@ var store = (0,vuex__WEBPACK_IMPORTED_MODULE_7__.createStore)({
       var commit = _ref5.commit;
       this.state.isShowingPurchaseOrderHistory = stepStatus;
     },
-    enabledButtonBuyResumeOrder: function enabledButtonBuyResumeOrder(_ref6, stepStatus) {
+    getProduct: function getProduct(_ref6) {
       var commit = _ref6.commit;
-      this.state.buttonPayOrderResume = stepStatus;
-    },
-    getProduct: function getProduct(_ref7) {
-      var commit = _ref7.commit;
       axios.get('/api/v1/product').then(function (response) {
         commit('SET_PRODUCT', response.data.data.attributes);
       })["catch"](function (error) {

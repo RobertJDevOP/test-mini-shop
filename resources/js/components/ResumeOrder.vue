@@ -109,12 +109,12 @@
                         <div class="columns" id="BottomDiv">
                             <div class="column">
                                 <div class="buttons has-addons">
-                                    <button  @click="stepTwoBuy" :disabled="buttonDisabled"  class="button is-warning is-fullwidth">Anterior</button>
+                                    <button  @click="stepTwoBuy" :disabled="buttonPreviousDisabled"  class="button is-warning is-fullwidth">Anterior</button>
                                 </div>
                             </div>
                             <div class="column">
                                 <div class="buttons has-addons">
-                                    <button  @click="walletPayment" :disabled="buttonDisabled" class="button is-primary is-fullwidth">Ir a pagar</button>
+                                    <button  @click="walletPayment" :disabled="buttonBuyDisabled" class="button is-primary is-fullwidth">Ir a pagar</button>
                                 </div>
                             </div>
                         </div>
@@ -137,6 +137,16 @@
                     </div>
             </div>
         </vue-final-modal>
+
+        <vue-final-modal
+            v-model="showModalConexRequest"
+            classes="modal-container"
+            content-class="modal-content">
+            <span class="modal__title">Ocurrió un error inesperado</span>
+            <div class="modal__content">
+
+            </div>
+        </vue-final-modal>
     </div>
 </template>
 
@@ -149,7 +159,9 @@ export default {
     data() {
         return {
             messageFailed: '',
-            buttonDisabled : false,
+            buttonBuyDisabled : false,
+            buttonPreviousDisabled : false,
+            showModalConexRequest : false,
             showModal: false,
             errorsForm : []
         }
@@ -160,6 +172,7 @@ export default {
             this.$store.dispatch('startStepThreeBuy',false)
         },
         walletPayment(){
+
             let bodyFormData = new FormData();
             bodyFormData.append('customerDocumentNumber', this.$store.state.customer.customerDocumentNumber);
             bodyFormData.append('customerAddress', this.$store.state.customer.customerStreet);
@@ -169,44 +182,75 @@ export default {
             bodyFormData.append('customerPhone', this.$store.state.customer.customerPhone);
             bodyFormData.append('qtyProduct', this.$store.state.qtyProduct);
 
-            this.buttonDisabled = true
+            this.buttonBuyDisabled = true
+            this.buttonPreviousDisabled = true
             this.$store.commit('setHideLoader',true)
-            this.$store.dispatch('enabledButtonBuyResumeOrder',true)
 
-            axios.post('api/v1/createOrder',bodyFormData,
-            ).then((response) => {
-                if(500===response.data.status.status){
-                    window.dispatchEvent(new CustomEvent('event-when-wallet-failed',{
-                        detail: {
-                            messageBadRequest: response.data.status.message,
-                        }
-                    }));
-                }else{
-                    this.$store.commit('setPurchaseOrderId', response.data.purchaseOrderId);
-                    P.init(response.data.processUrl, { opacity: 0.4 });
-                    P.on('response', function(data) {
-                        localStorage.setItem('statusTransaction',  data.status.status);
-                        localStorage.setItem('messageTransaction',  data.status.message);
-
-                        window.dispatchEvent(new CustomEvent('event-when-client-return-ecommerce', {
+            try {
+                axios.post('api/v1/createOrder',bodyFormData,
+                ).then((response) => {
+                    if(500===response.data.status.status){
+                        window.dispatchEvent(new CustomEvent('event-when-wallet-failed',{
                             detail: {
-                                statusTransaction: localStorage.getItem('statusTransaction'),
-                                messageTransaction: localStorage.getItem('messageTransaction')
+                                messageBadRequest: response.data.status.message,
                             }
                         }));
-                    })
-                }
-            })
-            .catch((error) =>
-                 this.readingFormErrors(error.response.data.errors)
-            )
+                    }else{
+                        this.$store.commit('setPurchaseOrderId', response.data.purchaseOrderId);
+                        P.init(response.data.processUrl, { opacity: 0.4 });
+                        P.on('response', function(data) {
+
+                            localStorage.setItem('statusTransaction',  data.status.status);
+                            localStorage.setItem('messageTransaction',  data.status.message);
+
+                            window.dispatchEvent(new CustomEvent('event-when-client-return-ecommerce', {
+                                detail: {
+                                    statusTransaction: localStorage.getItem('statusTransaction'),
+                                    messageTransaction: localStorage.getItem('messageTransaction')
+                                }
+                            }));
+                        })
+                    }
+                })
+                    .catch((error) => {
+                        // create base class
+                            if (error.response) {
+                                if(error.response.status === 422){
+                                    this.readingFormErrors(error.response.data.errors)
+                                }
+                                if(error.response.status === 500){
+                                 //Mostrar error pasarela excepctiones por parte del backend
+                                }
+                                // The request was made and the server responded with a status code
+                                // that falls out of the range of 2xx
+                                // console.log(error.response.data);
+                                // console.log(error.response.status);
+                                // console.log(error.response.headers);
+                            } else if (error.request) {
+                                // The request was made but no response was received
+                                // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+                                // http.ClientRequest in node.js
+                                console.log('Ninguna respuesta..'+error.request);
+                            } else {
+                                // Something happened in setting up the request that triggered an Error
+                                console.log('Error de conexion', error.message);
+                            }
+                        }
+                    )
+            } catch (error) {
+                console.error(error.response.data);
+            }
+
         },
         readingFormErrors(errors){
+            this.errorsForm = []
             for (const error in errors) {
                 this.errorsForm.push(errors[error][0])
             }
-            this.buttonDisabled = false
+            this.buttonBuyDisabled = false
+            this.buttonPreviousDisabled = false
             this.showModal = true;
+            this.$store.commit('setHideLoader',false)
         }
     },
     computed:{

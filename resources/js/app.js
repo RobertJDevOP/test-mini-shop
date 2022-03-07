@@ -13,7 +13,6 @@ import  { createStore } from 'vuex';
 const store = createStore({
     state () {
         return {
-            buttonPayOrderResume : false,
             isShowingUserData: false,
             isShowingShop:true,
             isShowingResumeOrder:false,
@@ -109,9 +108,6 @@ const store = createStore({
         },
         startPurchaseOrderHistory({ commit },stepStatus){
             this.state.isShowingPurchaseOrderHistory=stepStatus;
-        },
-        enabledButtonBuyResumeOrder({ commit },stepStatus){
-            this.state.buttonPayOrderResume=stepStatus;
         },
         getProduct({ commit }){
             axios.get('/api/v1/product')
