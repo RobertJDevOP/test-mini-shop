@@ -32,7 +32,7 @@ __webpack_require__.r(__webpack_exports__);
       this.$store.dispatch('startPurchaseOrderHistory', false);
     },
     viewDetail: function viewDetail(index) {
-      this.purchaseOrderDetail = index.details_order;
+      this.purchaseOrderDetail = index;
       this.showModal = true;
     },
     retryPayment: function retryPayment(purchaseOrderId) {
@@ -83,7 +83,7 @@ __webpack_require__.r(__webpack_exports__);
 
     this.moment = (moment__WEBPACK_IMPORTED_MODULE_1___default());
     axios.get('/api/v1/purchases').then(function (response) {
-      _this.$store.commit('setPurchases', response.data);
+      _this.$store.commit('setPurchases', response.data.data);
     })["catch"](function (error) {
       return console.error(error);
     });
@@ -256,8 +256,8 @@ __webpack_require__.r(__webpack_exports__);
     var _this2 = this;
 
     window.addEventListener('event-when-purchase-has-finished', function () {
-      console.log('Evento ejecutado purchase finished..');
-      _this2.buttonDisabled = _this2.$store.state.buttonPayOrderResume;
+      _this2.buttonBuyDisabled = false;
+      _this2.buttonPreviousDisabled = false;
     });
   }
 });
@@ -309,22 +309,17 @@ __webpack_require__.r(__webpack_exports__);
       _this.$store.commit('setHideLoader', false);
 
       _this.showModal = true;
-
-      _this.$store.dispatch('enabledButtonBuyResumeOrder', false);
-
       window.dispatchEvent(new CustomEvent('event-when-purchase-has-finished', {}));
     });
     window.addEventListener('event-when-client-return-ecommerce', function (event) {
       axios.get('payment/' + _this.$store.state.purchaseOrderId, {}).then(function () {});
       axios.get('/api/v1/purchases').then(function (response) {
-        _this.$store.commit('setPurchases', response.data);
+        _this.$store.commit('setPurchases', response.data.data);
       })["catch"](function (error) {
         return console.error(error);
       });
       _this.statusTransaction = event.detail.statusTransaction;
       _this.messageTransaction = event.detail.messageTransaction;
-
-      _this.$store.dispatch('enabledButtonBuyResumeOrder', false);
 
       _this.$store.commit('setHideLoader', false);
 
@@ -345,8 +340,6 @@ __webpack_require__.r(__webpack_exports__);
       });
       _this.statusTransaction = event.detail.statusTransaction;
       _this.messageTransaction = event.detail.messageTransaction;
-
-      _this.$store.dispatch('enabledButtonBuyResumeOrder', false);
 
       _this.$store.dispatch('startPurchaseOrderHistory', false);
 
@@ -583,7 +576,7 @@ var _hoisted_5 = {
 var _hoisted_6 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", {
     "class": "title is-4"
-  }, " Historial de pagos electronicos ", -1
+  }, "Historial de pagos electronicos ", -1
   /* HOISTED */
   );
 });
@@ -605,7 +598,7 @@ var _hoisted_9 = {
 };
 
 var _hoisted_10 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("thead", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "#"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Quantity"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Total"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Estado"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Fecha de creación"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Acciones")])], -1
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("thead", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "#"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Cantidad"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Total"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Estado"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Fecha de creación"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, "Acciones")])], -1
   /* HOISTED */
   );
 });
@@ -660,34 +653,34 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return $options.goToStepOne && $options.goToStepOne.apply($options, arguments);
     }),
     "class": "button is-primary is-small"
-  }, "Volver"), _hoisted_7, _hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("table", _hoisted_9, [_hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($options.getPurchases, function (purchase, index) {
+  }, "Volver"), _hoisted_7, _hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("table", _hoisted_9, [_hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tbody", null, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($options.getPurchases, function (purchase) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("tr", {
       key: purchase.id
-    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(purchase.id), 1
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(purchase.attributes.id), 1
     /* TEXT */
-    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(purchase.qty), 1
+    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(purchase.attributes.qty), 1
     /* TEXT */
-    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(Number(purchase.total).toLocaleString()), 1
+    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(Number(purchase.attributes.total).toLocaleString()), 1
     /* TEXT */
-    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [purchase.status === 'CREATED' || purchase.status === 'PENDING' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_11, " Pendiente ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), purchase.status === 'PAYED' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_12, " Pagada ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), purchase.status === 'REJECTED' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_13, " Rechazada ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.moment(purchase.created_at).subtract(10, 'days').calendar()), 1
+    ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [purchase.attributes.status === 'CREATED' || purchase.attributes.status === 'PENDING' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_11, " Pendiente ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), purchase.attributes.status === 'PAYED' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_12, " Pagada ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), purchase.attributes.status === 'REJECTED' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_13, " Rechazada ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(purchase.attributes.created_at), 1
     /* TEXT */
     ), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
       onClick: function onClick($event) {
-        return $options.viewDetail(purchase);
+        return $options.viewDetail(purchase.relationships);
       },
       "class": "button is-primary is-small"
     }, "Ver detalle", 8
     /* PROPS */
-    , _hoisted_14), purchase.status === 'REJECTED' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    , _hoisted_14), purchase.attributes.status === 'REJECTED' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
       onClick: function onClick($event) {
-        return $options.retryPayment(purchase.id);
+        return $options.retryPayment(purchase.attributes.id);
       },
       "class": "button is-warning is-small"
     }, "Re intentar pago", 8
     /* PROPS */
-    , _hoisted_16)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), purchase.status === 'CREATED' || purchase.status === 'PENDING' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    , _hoisted_16)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), purchase.attributes.status === 'CREATED' || purchase.attributes.status === 'PENDING' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_17, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
       onClick: function onClick($event) {
-        return $options.continuePayment(purchase.id);
+        return $options.continuePayment(purchase.attributes.id);
       },
       "class": "button is-warning is-small"
     }, "Continuar con el pago", 8
@@ -2015,7 +2008,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n[data-v-6a213672] .modal-container {\r\n    display: flex;\r\n    justify-content: center;\r\n    align-items: center;\n}\n[data-v-6a213672] .modal-content {\r\n    display: flex;\r\n    flex-direction: column;\r\n    margin: 0 1rem;\r\n    padding: 1rem;\r\n    border: 1px solid #e2e8f0;\r\n    border-radius: 0.25rem;\r\n    background: #fff;\n}\n.modal__title[data-v-6a213672] {\r\n    font-size: 1.5rem;\r\n    font-weight: 700;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n[data-v-6a213672] .modal-container {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n}\n[data-v-6a213672] .modal-content {\n    display: flex;\n    flex-direction: column;\n    margin: 0 1rem;\n    padding: 1rem;\n    border: 1px solid #e2e8f0;\n    border-radius: 0.25rem;\n    background: #fff;\n}\n.modal__title[data-v-6a213672] {\n    font-size: 1.5rem;\n    font-weight: 700;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -2063,7 +2056,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n[data-v-f9261dd4] .modal-container {\r\n    display: flex;\r\n    justify-content: center;\r\n    align-items: center;\n}\n[data-v-f9261dd4] .modal-content {\r\n    display: flex;\r\n    flex-direction: column;\r\n    margin: 0 1rem;\r\n    padding: 1rem;\r\n    border: 1px solid #e2e8f0;\r\n    border-radius: 0.25rem;\r\n    background: #fff;\n}\n.modal__title[data-v-f9261dd4] {\r\n    font-size: 1.5rem;\r\n    font-weight: 700;\n}\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n[data-v-f9261dd4] .modal-container {\n    display: flex;\n    justify-content: center;\n    align-items: center;\n}\n[data-v-f9261dd4] .modal-content {\n    display: flex;\n    flex-direction: column;\n    margin: 0 1rem;\n    padding: 1rem;\n    border: 1px solid #e2e8f0;\n    border-radius: 0.25rem;\n    background: #fff;\n}\n.modal__title[data-v-f9261dd4] {\n    font-size: 1.5rem;\n    font-weight: 700;\n}\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

@@ -287,8 +287,8 @@ export default {
     },
     mounted() {
         window.addEventListener('event-when-purchase-has-finished', () => {
-            console.log('Evento ejecutado purchase finished..')
-            this.buttonDisabled = this.$store.state.buttonPayOrderResume;
+            this.buttonBuyDisabled = false
+            this.buttonPreviousDisabled = false
         });
     }
 }

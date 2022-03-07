@@ -11,14 +11,14 @@ class PurchaseOrderResource extends JsonResource
     {
         return [
             'type' => 'purchase_order',
-            'attributes'=>[
+            'attributes' => [
                 'status' => $this->status,
                 'qty' => $this->qty,
                 'total' => $this->total,
                 'id' => $this->id,
                 'created_at' => $this->created_at->toDateString(),
             ],
-            'relationships' => New PurchaseOrderDetailResource($this->detailsOrder),
+            'relationships' => PurchaseOrderDetailResource::collection($this->whenLoaded('detailsOrder')),
         ];
     }
 }

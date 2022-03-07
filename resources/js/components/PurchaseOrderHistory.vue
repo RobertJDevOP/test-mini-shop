@@ -6,14 +6,14 @@
             <div class="container">
                 <div class="columns is-centered">
                     <div class="column is-half">
-                       <h3 class="title is-4">  Historial de pagos electronicos  </h3>
+                       <h3 class="title is-4">Historial de pagos electronicos  </h3>
                         <button  @click="goToStepOne"  class="button is-primary is-small">Volver</button>
                         <br><br>
                         <table class="table">
                             <thead>
                             <tr>
                                 <th>#</th>
-                                <th>Quantity</th>
+                                <th>Cantidad</th>
                                 <th>Total</th>
                                 <th>Estado</th>
                                 <th>Fecha de creación</th>
@@ -21,31 +21,29 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr v-for="(purchase,index) in getPurchases" :key="purchase.id" >
-                                <td>{{purchase.id}}</td>
-                                <td>{{purchase.qty}}</td>
-                                <td>{{Number(purchase.total).toLocaleString()}}</td>
+                            <tr v-for="(purchase) in getPurchases" :key="purchase.id" >
+                                <td>{{purchase.attributes.id}}</td>
+                                <td>{{purchase.attributes.qty}}</td>
+                                <td>{{Number(purchase.attributes.total).toLocaleString()}}</td>
                                 <td>
-                                    <div v-if="purchase.status === 'CREATED' || purchase.status === 'PENDING'">
+                                    <div v-if="purchase.attributes.status === 'CREATED' || purchase.attributes.status === 'PENDING'">
                                         Pendiente
                                     </div>
-                                    <div v-if="purchase.status === 'PAYED'">
+                                    <div v-if="purchase.attributes.status === 'PAYED'">
                                         Pagada
                                     </div>
-                                    <div v-if="purchase.status === 'REJECTED'">
+                                    <div v-if="purchase.attributes.status === 'REJECTED'">
                                         Rechazada
                                     </div>
                                 </td>
+                                <td>{{purchase.attributes.created_at}}</td>
                                 <td>
-                                  {{moment(purchase.created_at).subtract(10, 'days').calendar()}}
-                               </td>
-                                <td>
-                                    <button  @click="viewDetail(purchase)" class="button is-primary is-small">Ver detalle</button>
-                                    <div v-if="purchase.status === 'REJECTED'">
-                                        <button  @click="retryPayment(purchase.id)"  class="button is-warning is-small">Re intentar pago</button>
+                                    <button  @click="viewDetail(purchase.relationships)" class="button is-primary is-small">Ver detalle</button>
+                                    <div v-if="purchase.attributes.status === 'REJECTED'">
+                                        <button  @click="retryPayment(purchase.attributes.id)"  class="button is-warning is-small">Re intentar pago</button>
                                     </div>
-                                    <div v-if="purchase.status === 'CREATED' || purchase.status === 'PENDING'">
-                                        <button  @click="continuePayment(purchase.id)"  class="button is-warning is-small">Continuar con el pago</button>
+                                    <div v-if="purchase.attributes.status === 'CREATED' || purchase.attributes.status === 'PENDING'">
+                                        <button  @click="continuePayment(purchase.attributes.id)"  class="button is-warning is-small">Continuar con el pago</button>
                                     </div>
                                 </td>
                             </tr>
@@ -109,7 +107,7 @@ export default {
             this.$store.dispatch('startPurchaseOrderHistory',false)
         },
         viewDetail(index){
-            this.purchaseOrderDetail = index.details_order;
+            this.purchaseOrderDetail = index;
             this.showModal = true
         },
         retryPayment(purchaseOrderId){
@@ -154,7 +152,7 @@ export default {
         this.moment = moment;
         axios.get('/api/v1/purchases')
             .then((response) => {
-                this.$store.commit('setPurchases',response.data)
+                this.$store.commit('setPurchases',response.data.data)
             }).catch((error) => console.error(error))
     },
     mounted(){

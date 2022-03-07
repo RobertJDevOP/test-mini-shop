@@ -92,7 +92,6 @@ export default {
             this.messageFailed=event.detail.messageBadRequest
             this.$store.commit('setHideLoader',false)
             this.showModal = true
-            this.$store.dispatch('enabledButtonBuyResumeOrder',false)
             window.dispatchEvent(new CustomEvent('event-when-purchase-has-finished', {
             }));
 
@@ -103,12 +102,11 @@ export default {
             })
             axios.get('/api/v1/purchases')
                 .then((response) => {
-                    this.$store.commit('setPurchases',response.data)
+                    this.$store.commit('setPurchases',response.data.data)
                 }).catch((error) => console.error(error))
 
             this.statusTransaction = event.detail.statusTransaction;
             this.messageTransaction = event.detail.messageTransaction;
-            this.$store.dispatch('enabledButtonBuyResumeOrder',false)
             this.$store.commit('setHideLoader',false)
             this.showingCardContent = true;
             window.dispatchEvent(new CustomEvent('event-when-purchase-has-finished', {
@@ -125,7 +123,6 @@ export default {
 
             this.statusTransaction = event.detail.statusTransaction;
             this.messageTransaction = event.detail.messageTransaction;
-            this.$store.dispatch('enabledButtonBuyResumeOrder',false)
             this.$store.dispatch('startPurchaseOrderHistory',false)
             this.$store.commit('setHideLoader',false)
             window.dispatchEvent(new CustomEvent('event-when-purchase-has-finished', {
