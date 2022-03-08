@@ -31,10 +31,10 @@ class PaymentController extends Controller
 
     public function continuePayment(int $purchaseOrderId): JsonResponse
     {
-        $purchasePayment = PurchasePayment::select('processUrl')->where('id_purchase_order', $purchaseOrderId)
+        $processUrl = PurchasePayment::select('processUrl')->where('id_purchase_order', $purchaseOrderId)
             ->latest('id_purchase_payment')->first();
 
-       return response()->json(['processUrl' => $purchasePayment->processUrl]);
+       return response()->json(['processUrl' => $processUrl->processUrl]);
     }
 
 }
