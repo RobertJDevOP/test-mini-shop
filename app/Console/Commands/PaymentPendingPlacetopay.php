@@ -5,7 +5,6 @@ namespace App\Console\Commands;
 use App\Http\Controllers\PaymentController;
 use App\Models\PurchasePayment;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Log;
 
 class PaymentPendingPlacetopay extends Command
 {
@@ -47,11 +46,9 @@ class PaymentPendingPlacetopay extends Command
 
         if($purchasePayments->count() > 0) {
             foreach ($purchasePayments as $purchasePayment) {
-                $response = $paymentController->getRequestInformation($purchasePayment->id_purchase_order);
-                Log::info('se actualiza la transaccion en estado pendiente.',['response' => $response]);
+                $paymentController->getRequestInformation($purchasePayment->id_purchase_order);
             }
         }else {
-            Log::info('No se proceso ninguna transaccion en pendiente.',[]);
             exit;
         }
     }

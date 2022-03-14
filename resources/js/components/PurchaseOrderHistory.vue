@@ -7,7 +7,8 @@
                 <div class="columns is-centered">
                     <div class="column is-half">
                        <h3 class="title is-4">Historial de pagos electronicos </h3>
-                        <button  @click="goToStepOne"  class="button is-primary is-small">Volver</button>
+                        <button  @click="goToStepOne"  class="button is-primary is-small">Volver</button><br><br>
+                        <p>Los pagos en estado pendiente se actualizaran automaticamente una vez se de respuesta del banco.</p>
                         <br><br>
                         <table class="table">
                             <thead>
