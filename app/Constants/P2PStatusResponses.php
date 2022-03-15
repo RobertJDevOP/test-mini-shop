@@ -2,7 +2,7 @@
 
 namespace App\Constants;
 
-class PlacetopayStatusResponses
+class P2PStatusResponses
 {
     public const OK = 'OK';
     public const FAILED = 'FAILED';

@@ -2,11 +2,11 @@
 
 namespace Tests\Feature\PaymentGateways;
 
-use App\Constants\PlacetopayStatusResponses;
+use App\Constants\P2PStatusResponses;
 use App\Models\Customer;
 use App\Models\PurchaseOrder;
 use App\Models\PurchaseOrderDetail;
-use App\PaymentGateways\PlacetopayWebCheckout;
+use App\PaymentGateways\P2PWebCheckout;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Http;
@@ -22,7 +22,7 @@ class PlacetopayWebcheckoutTest extends TestCase
         Http::fake([
             'https://dev.placetopay.com/redirection/*' => Http::response($this->placetopayResponse(),200)
         ]);
-        $paymentGateway = new PlacetopayWebCheckout($purchaseOrder,null);
+        $paymentGateway = new P2PWebCheckout($purchaseOrder,null);
 
         $response = $paymentGateway->createRequest();
 
@@ -36,7 +36,7 @@ class PlacetopayWebcheckoutTest extends TestCase
         Http::fake([
             'https://checkout-co.placetopay.dev/api/session/123123' => Http::response($placeToPayResponse,200)
         ]);
-        $paymentWallet = new PlacetopayWebCheckout($purchaseOrder->id,$placeToPayResponse['requestId']);
+        $paymentWallet = new P2PWebCheckout($purchaseOrder->id,$placeToPayResponse['requestId']);
 
         $response= $paymentWallet->getRequestInformation();
 
@@ -45,12 +45,12 @@ class PlacetopayWebcheckoutTest extends TestCase
 
     public function test_it_get_request_is_aprroved(): void
     {
-        $placeToPayResponse = $this->placetopayResponse(PlacetopayStatusResponses::APPROVED);
+        $placeToPayResponse = $this->placetopayResponse(P2PStatusResponses::APPROVED);
         $purchaseOrder = $this->createPurchaseOrder();
         Http::fake([
             'https://checkout-co.placetopay.dev/api/session/123123' => Http::response($placeToPayResponse,200)
         ]);
-        $paymentWallet = new PlacetopayWebCheckout($purchaseOrder->id,$placeToPayResponse['requestId']);
+        $paymentWallet = new P2PWebCheckout($purchaseOrder->id,$placeToPayResponse['requestId']);
 
         $response= $paymentWallet->getRequestInformation();
 
@@ -59,12 +59,12 @@ class PlacetopayWebcheckoutTest extends TestCase
 
     public function test_it_get_request_is_rejected(): void
     {
-        $placeToPayResponse = $this->placetopayResponse(PlacetopayStatusResponses::REJECTED);
+        $placeToPayResponse = $this->placetopayResponse(P2PStatusResponses::REJECTED);
         $purchaseOrder = $this->createPurchaseOrder();
         Http::fake([
             'https://checkout-co.placetopay.dev/api/session/123123' => Http::response($placeToPayResponse,200)
         ]);
-        $paymentWallet = new PlacetopayWebCheckout($purchaseOrder->id,$placeToPayResponse['requestId']);
+        $paymentWallet = new P2PWebCheckout($purchaseOrder->id,$placeToPayResponse['requestId']);
 
         $response= $paymentWallet->getRequestInformation();
 
@@ -80,7 +80,7 @@ class PlacetopayWebcheckoutTest extends TestCase
             ->create();
     }
 
-    public function placetopayResponse(string $status = PlacetopayStatusResponses::OK): array
+    public function placetopayResponse(string $status = P2PStatusResponses::OK): array
     {
         return [
             'status' => [

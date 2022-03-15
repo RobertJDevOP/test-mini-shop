@@ -5,7 +5,7 @@ namespace Tests\Feature\PurchasePayment;
 use App\Models\Customer;
 use App\Models\PurchaseOrder;
 use App\Models\PurchaseOrderDetail;
-use App\PaymentGateways\PlacetopayWebCheckout;
+use App\PaymentGateways\P2PWebCheckout;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Http;
@@ -41,7 +41,7 @@ class IndexTest extends TestCase
     public function test_it_placetopay_request_info_received_json_structure(): void
     {
         $purchaseOrder = $this->createPurchaseOrder();
-        $paymentGateway = new PlacetopayWebCheckout($purchaseOrder,null);
+        $paymentGateway = new P2PWebCheckout($purchaseOrder,null);
         $paymentGateway->createRequest();
 
         $response = $this->get('/payment/'.$purchaseOrder->id);
@@ -67,7 +67,7 @@ class IndexTest extends TestCase
         Http::fake([
             'https://checkout-co.placetopay.dev/api/session/123123' => Http::response($placeToPayResponse,200)
         ]);
-        $paymentWallet = new PlacetopayWebCheckout($purchaseOrder->id,$placeToPayResponse['requestId']);
+        $paymentWallet = new P2PWebCheckout($purchaseOrder->id,$placeToPayResponse['requestId']);
         $paymentWallet->getRequestInformation();
 
         $response = $this->getJson('/continuePayment/'.$purchaseOrder->id);

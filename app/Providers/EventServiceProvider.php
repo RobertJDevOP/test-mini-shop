@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Models\PurchaseOrder;
 use App\Models\PurchasePayment;
+use App\Observers\PurchaseOrderObserver;
 use App\Observers\PurchasePaymentObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
@@ -13,7 +15,6 @@ class EventServiceProvider extends ServiceProvider
 {
     /**
      * The event listener mappings for the application.
-     *
      * @var array<class-string, array<int, class-string>>
      */
     protected $listen = [
@@ -22,14 +23,10 @@ class EventServiceProvider extends ServiceProvider
         ],
     ];
 
-    /**
-     * Register any events for your application.
-     *
-     * @return void
-     */
-    public function boot()
+    public function boot(): void
     {
         PurchasePayment::observe(PurchasePaymentObserver::class);
+        PurchaseOrder::observe(PurchaseOrderObserver::class);
     }
 
     /**

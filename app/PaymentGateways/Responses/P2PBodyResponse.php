@@ -2,10 +2,10 @@
 
 namespace App\PaymentGateways\Responses;
 
-use App\Constants\PlacetopayStatusResponses;
-use App\Helpers\PlacetopayJsonResponses;
+use App\Constants\P2PStatusResponses;
+use App\Helpers\P2PResponses;
 
-class PlacetopayResponse
+class P2PBodyResponse
 {
     private array $body;
     private ?int $purchaseOrderId;
@@ -21,9 +21,9 @@ class PlacetopayResponse
         $statusCode = (array_key_exists('status',$this->body))?$this->body['status']['status'] : 500;
 
         return match ($statusCode) {
-        PlacetopayStatusResponses::OK, PlacetopayStatusResponses::PENDING,
-        PlacetopayStatusResponses::REJECTED, PlacetopayStatusResponses::APPROVED, => PlacetopayJsonResponses::transactionRecordOK($this->body,$this->purchaseOrderId),
-        PlacetopayStatusResponses::FAILED =>  'RETURN CREDENCIALES INCORRECTAS...'
+        P2PStatusResponses::OK, P2PStatusResponses::PENDING,
+        P2PStatusResponses::REJECTED, P2PStatusResponses::APPROVED, => P2PResponses::transactionRecordOK($this->body,$this->purchaseOrderId),
+        P2PStatusResponses::FAILED =>  'RETURN CREDENCIALES INCORRECTAS...'
         };
     }
 }

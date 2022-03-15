@@ -4,13 +4,13 @@ namespace App\PaymentGateways;
 
 use App\Entities\Product;
 use App\Models\PurchaseOrder;
-use App\PaymentGateways\Responses\PlacetopayResponse;
+use App\PaymentGateways\Responses\P2PBodyResponse;
 use Carbon\Carbon;
 use DateTimeZone;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 
-class PlacetopayWebCheckout implements IGatewayApiWallet
+class P2PWebCheckout implements IGatewayApiWallet
 {
     private ?string $requestId;
     private PurchaseOrder|int $purchaseOrder;
@@ -31,7 +31,7 @@ class PlacetopayWebCheckout implements IGatewayApiWallet
         if($response->failed()){
             return $this->messageError;
         }else{
-            $placetoPayResponse = new PlacetopayResponse(json_decode($response->body(),true),$this->purchaseOrder->id);
+            $placetoPayResponse = new P2PBodyResponse(json_decode($response->body(),true),$this->purchaseOrder->id);
             return $placetoPayResponse->getResponse();
         }
     }
@@ -39,7 +39,7 @@ class PlacetopayWebCheckout implements IGatewayApiWallet
     public function getRequestInformation(): array
     {
         $response = Http::post(config('app.placetopay_uri').'/api/session/'.$this->requestId,$this->makeAuth());
-        $placetoPayResponse = new PlacetopayResponse(json_decode($response->body(),true),$this->purchaseOrder);
+        $placetoPayResponse = new P2PBodyResponse(json_decode($response->body(),true),$this->purchaseOrder);
 
         return $placetoPayResponse->getResponse();
     }
@@ -64,7 +64,7 @@ class PlacetopayWebCheckout implements IGatewayApiWallet
             ],
         ];
     }
-    //Clase abstracta maybe.....
+
     public function makePayment(): array
     {
         $product = new Product();

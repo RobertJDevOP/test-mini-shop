@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Constants\PlacetopayStatusResponses;
+use App\Constants\P2PStatusResponses;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -31,7 +31,7 @@ class PurchaseOrder extends Model
     public  function  purchasePaymentsStatus(): HasMany
     {
         return $this->hasMany(PurchasePayment::class,'id_purchase_order','id')
-            ->whereIn('purchase_payment.status', [PlacetopayStatusResponses::APPROVED, PlacetopayStatusResponses::REJECTED, PlacetopayStatusResponses::PENDING]);
+            ->whereIn('purchase_payment.status', [P2PStatusResponses::APPROVED, P2PStatusResponses::REJECTED, P2PStatusResponses::PENDING]);
     }
 
 }

@@ -12,15 +12,8 @@ class Customer extends Model
 
     protected $table = 'customers';
 
-    protected $fillable = [
-        'document_number',
-        'address',
-        'document_type_id',
-    ];
-
     public function documentType(): BelongsTo
     {
         return $this->belongsTo(DocumentType::class);
     }
-
 }
