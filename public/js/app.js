@@ -76,19 +76,26 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         return console.error(error);
       });
+    },
+    getPurchaseOrders: function getPurchaseOrders() {
+      var _this = this;
+
+      axios.get('/api/v1/purchases').then(function (response) {
+        _this.$store.commit('setPurchases', response.data.data);
+      })["catch"](function (error) {
+        return console.error(error);
+      });
     }
   },
-  beforeCreate: function beforeCreate() {
-    var _this = this;
+  created: function created() {
+    var _this2 = this;
 
     this.moment = (moment__WEBPACK_IMPORTED_MODULE_1___default());
-    axios.get('/api/v1/purchases').then(function (response) {
-      _this.$store.commit('setPurchases', response.data.data);
-    })["catch"](function (error) {
-      return console.error(error);
+    this.getPurchaseOrders();
+    window.Echo.channel('updatedTransactions').listen('UpdatePendingTransactions', function (e) {
+      if (e.message == 'PAYMENT_UPDATED') _this2.getPurchaseOrders();
     });
   },
-  mounted: function mounted() {},
   computed: {
     getHideLoader: function getHideLoader() {
       return this.$store.state.loaderWallet;
@@ -1848,7 +1855,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_SpinnerWaitPayment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/SpinnerWaitPayment */ "./resources/js/components/SpinnerWaitPayment.vue");
 /* harmony import */ var _components_ResumeTransaction__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/ResumeTransaction */ "./resources/js/components/ResumeTransaction.vue");
 /* harmony import */ var _components_PurchaseOrderHistory__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/PurchaseOrderHistory */ "./resources/js/components/PurchaseOrderHistory.vue");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm-bundler.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm-bundler.js");
+/* harmony import */ var laravel_echo__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! laravel-echo */ "./node_modules/laravel-echo/dist/echo.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
@@ -1859,7 +1867,17 @@ __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 
 
-var store = (0,vuex__WEBPACK_IMPORTED_MODULE_7__.createStore)({
+
+window.Pusher = __webpack_require__(/*! pusher-js */ "./node_modules/pusher-js/dist/web/pusher.js");
+window.Echo = new laravel_echo__WEBPACK_IMPORTED_MODULE_7__["default"]({
+  broadcaster: 'pusher',
+  key: "6673f5e00bb33e0a31c7",
+  wsHost: window.location.hostname,
+  wsPort: 6001,
+  disableStats: true,
+  forceTLS: false
+});
+var store = (0,vuex__WEBPACK_IMPORTED_MODULE_8__.createStore)({
   state: function state() {
     return {
       isShowingUserData: false,

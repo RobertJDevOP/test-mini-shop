@@ -12,9 +12,11 @@
     "devDependencies": {
         "@vue/compiler-sfc": "^3.2.31",
         "axios": "^0.25.0",
+        "laravel-echo": "^1.11.3",
         "laravel-mix": "^6.0.6",
         "lodash": "^4.17.19",
         "postcss": "^8.1.14",
+        "pusher-js": "^7.0.6",
         "resolve-url-loader": "^5.0.0",
         "sass": "^1.49.8",
         "sass-loader": "^12.6.0"

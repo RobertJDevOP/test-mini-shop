@@ -154,16 +154,20 @@ export default {
                     })
                 }).catch((error) => console.error(error))
         },
+        getPurchaseOrders(){
+            axios.get('/api/v1/purchases')
+                .then((response) => {
+                    this.$store.commit('setPurchases',response.data.data)
+                }).catch((error) => console.error(error))
+        }
     },
-    beforeCreate() {
+    created() {
         this.moment = moment;
-        axios.get('/api/v1/purchases')
-            .then((response) => {
-                this.$store.commit('setPurchases',response.data.data)
-            }).catch((error) => console.error(error))
-    },
-    mounted(){
-
+        this.getPurchaseOrders()
+        window.Echo.channel('updatedTransactions').listen('UpdatePendingTransactions', (e) => {
+            if(e.message == 'PAYMENT_UPDATED')
+                this.getPurchaseOrders()
+        })
     },
     computed:{
         getHideLoader(){

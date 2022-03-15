@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Events\UpdatePendingTransactions;
 use App\Http\Controllers\PaymentController;
 use App\Models\PurchasePayment;
 use Illuminate\Console\Command;
@@ -48,8 +49,7 @@ class PaymentPendingPlacetopay extends Command
             foreach ($purchasePayments as $purchasePayment) {
                 $paymentController->getRequestInformation($purchasePayment->id_purchase_order);
             }
-        }else {
-            exit;
+            event(new UpdatePendingTransactions('PAYMENT_UPDATED'));
         }
     }
 }
